@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5f0" />
+    <meta name="description" content="Portafolio profesional de Jermy Cubas Solsol, desarrollador Full Stack especializado en sistemas de gestión." />
+    <meta name="author" content="Jermy Cubas Solsol" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jermy Cubas Solsol · Full Stack Developer" />
+    <meta property="og:description" content="Sistemas de gestión, plataformas web y experiencias digitales construidas desde Bagua, Perú." />
+    <meta property="og:image" content="assets/banner-jermy.png" />
+    <link rel="icon" type="image/png" href="assets/logo-jscs-transparent.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Jermy Cubas Solsol · Full Stack Developer</title>
+    <script>
+      (() => {
+        const saved = localStorage.getItem('jscs-theme');
+        const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = saved || (dark ? 'dark' : 'light');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Saltar al contenido</a>
+
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="#home" aria-label="Jermy Cubas Solsol — Inicio">
+          <span class="brand-logo" aria-hidden="true"><img src="assets/logo-jscs-transparent.png" alt="" /></span>
+          <span class="brand-copy"><strong>Jermy Cubas</strong><small>Full Stack Developer</small></span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Navegación principal">
+          <a href="#about" data-i18n="nav.about">Sobre mí</a>
+          <a href="#capabilities" data-i18n="nav.capabilities">Especialidades</a>
+          <a href="#work" data-i18n="nav.work">Proyectos</a>
+          <a href="#journey" data-i18n="nav.journey">Trayectoria</a>
+        </nav>
+
+        <div class="header-actions">
+          <label class="language-control">
+            <span class="sr-only" data-i18n="controls.language">Idioma</span>
+            <select id="language-select" aria-label="Idioma">
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="pt">PT</option>
+              <option value="fr">FR</option>
+              <option value="de">DE</option>
+            </select>
+          </label>
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar tema">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+          <a class="button button-small desktop-contact" href="#contact" data-i18n="nav.contact">Contacto</a>
+          <button class="icon-button menu-button" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-nav" id="mobile-nav" aria-label="Navegación móvil">
+        <a href="#about" data-i18n="nav.about">Sobre mí</a>
+        <a href="#capabilities" data-i18n="nav.capabilities">Especialidades</a>
+        <a href="#work" data-i18n="nav.work">Proyectos</a>
+        <a href="#journey" data-i18n="nav.journey">Trayectoria</a>
+        <a href="#contact" data-i18n="nav.contact">Contacto</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero section" id="home">
+        <div class="hero-backdrop" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow"><span class="status-dot"></span><span data-i18n="hero.eyebrow">Disponible para colaborar</span></p>
+            <h1><span data-i18n="hero.title">Construyo sistemas que convierten procesos complejos en</span> <em data-i18n="hero.emphasis">experiencias claras.</em></h1>
+            <p class="hero-lead" data-i18n="hero.lead">Soy Jermy Cubas Solsol, desarrollador Full Stack y estudiante de Ingeniería de Sistemas. Diseño plataformas de gestión, pagos y operaciones con una mirada práctica, segura y escalable.</p>
+            <div class="hero-actions">
+              <a class="button" href="#work"><span data-i18n="hero.primaryCta">Explorar proyectos</span><span aria-hidden="true">↘</span></a>
+              <a class="text-link" href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="hero.secondaryCta">Hablemos de una idea</span><span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="hero-meta" aria-label="Resumen profesional">
+              <li><strong>07</strong><span data-i18n="hero.metaProjects">sistemas destacados</span></li>
+              <li><strong>VIII</strong><span data-i18n="hero.metaCycle">ciclo · UNTRM</span></li>
+              <li><strong>PE</strong><span data-i18n="hero.metaLocation">Bagua, Amazonas</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-visual reveal reveal-delay">
+            <div class="portrait-frame">
+              <img src="assets/portrait.png" alt="Retrato de Jermy Cubas Solsol" data-i18n-alt="hero.photoAlt" />
+              <div class="portrait-gradient" aria-hidden="true"></div>
+              <div class="portrait-caption">
+                <span class="caption-label" data-i18n="hero.roleLabel">Enfoque actual</span>
+                <strong>Full Stack · Systems</strong>
+              </div>
+            </div>
+            <div class="floating-card code-card" aria-hidden="true">
+              <span>jermy@bagua:~$</span>
+              <strong>build --with-purpose</strong>
+            </div>
+            <div class="floating-card location-card"><span aria-hidden="true">⌁</span><span data-i18n="hero.locationCard">Construyendo desde Perú</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="identity-strip" aria-label="Tecnologías principales">
+        <div class="container identity-inner">
+          <p data-i18n="stack.label">Tecnologías con las que construyo</p>
+          <div class="tech-line" aria-label="TypeScript, Next.js, React, Node.js, PostgreSQL, Prisma">
+            <span>TypeScript</span><i></i><span>Next.js</span><i></i><span>React</span><i></i><span>Node.js</span><i></i><span>PostgreSQL</span><i></i><span>Prisma</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container about-grid">
+          <div class="section-heading reveal">
+            <p class="section-index">01 — <span data-i18n="about.label">Perfil</span></p>
+            <h2 data-i18n="about.title">Tecnología cercana, útil y pensada para durar.</h2>
+          </div>
+          <div class="about-content reveal">
+            <p class="about-lead" data-i18n="about.lead">Me interesa el punto donde la ingeniería se encuentra con las necesidades reales: digitalizar un trámite, ordenar una operación o conectar un pago sin añadir complejidad innecesaria.</p>
+            <div class="about-columns">
+              <p data-i18n="about.paragraphOne">Actualmente curso el VIII ciclo de Ingeniería de Sistemas en la Universidad Nacional Toribio Rodríguez de Mendoza y pertenezco al tercio superior. Desarrollo soluciones web de extremo a extremo y continúo fortaleciendo arquitectura, calidad y despliegue.</p>
+              <p data-i18n="about.paragraphTwo">Mi trabajo reúne interfaces claras, lógica de negocio, bases de datos y servicios externos. He participado en sistemas municipales, transporte, salud veterinaria, turismo, asociaciones productivas y operaciones comerciales.</p>
+            </div>
+            <div class="signature-row">
+              <div class="signature-card"><img src="assets/firma-digital.png" alt="Firma de Jermy Cubas Solsol" /></div>
+              <div><strong>Jermy Cubas Solsol</strong><span data-i18n="about.signatureRole">Full Stack Developer · Systems Engineering</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section surface-section" id="capabilities">
+        <div class="container">
+          <div class="section-heading horizontal reveal">
+            <div>
+              <p class="section-index">02 — <span data-i18n="capabilities.label">Especialidades</span></p>
+              <h2 data-i18n="capabilities.title">Del proceso al producto.</h2>
+            </div>
+            <p data-i18n="capabilities.intro">Combino producto, desarrollo y operación para entregar sistemas completos, no piezas aisladas.</p>
+          </div>
+
+          <div class="capability-grid">
+            <article class="capability-card reveal">
+              <span class="capability-number">01</span>
+              <div class="capability-icon" aria-hidden="true">⌘</div>
+              <h3 data-i18n="capabilities.fullstack.title">Desarrollo Full Stack</h3>
+              <p data-i18n="capabilities.fullstack.description">Interfaces responsivas, APIs, autenticación y lógica de negocio conectadas en una experiencia consistente.</p>
+              <div class="mini-stack"><span>Next.js</span><span>React</span><span>Node.js</span></div>
+            </article>
+            <article class="capability-card reveal reveal-delay-sm">
+              <span class="capability-number">02</span>
+              <div class="capability-icon" aria-hidden="true">▦</div>
+              <h3 data-i18n="capabilities.systems.title">Sistemas de gestión</h3>
+              <p data-i18n="capabilities.systems.description">Flujos operativos, roles, trazabilidad, reportes y paneles administrativos adaptados a cada organización.</p>
+              <div class="mini-stack"><span>RBAC</span><span>Reports</span><span>Audit</span></div>
+            </article>
+            <article class="capability-card reveal reveal-delay-lg">
+              <span class="capability-number">03</span>
+              <div class="capability-icon" aria-hidden="true">◇</div>
+              <h3 data-i18n="capabilities.data.title">Datos e integraciones</h3>
+              <p data-i18n="capabilities.data.description">Modelado relacional, pagos digitales, servicios externos y despliegues con observabilidad y calidad.</p>
+              <div class="mini-stack"><span>PostgreSQL</span><span>Stripe</span><span>Docker</span></div>
+            </article>
+          </div>
+
+          <div class="skills-panel reveal">
+            <div class="skills-copy">
+              <p class="overline" data-i18n="skills.overline">Stack técnico</p>
+              <h3 data-i18n="skills.title">Herramientas elegidas por el problema, no por la tendencia.</h3>
+              <div class="skill-groups">
+                <div><span data-i18n="skills.frontend">Frontend</span><p>TypeScript · React · Next.js · Tailwind</p></div>
+                <div><span data-i18n="skills.backend">Backend</span><p>Node.js · Express · C# · .NET</p></div>
+                <div><span data-i18n="skills.data">Datos</span><p>PostgreSQL · MySQL · Prisma · Neon · Aiven</p></div>
+                <div><span data-i18n="skills.delivery">Entrega</span><p>Git · Docker · Vercel · SonarQube · Grafana</p></div>
+              </div>
+            </div>
+            <div class="radar-wrap">
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="assets/radar-dark.svg" />
+                <img src="assets/radar-light.svg" alt="Radar orientativo de habilidades Full Stack" data-i18n-alt="skills.radarAlt" />
+              </picture>
+              <p data-i18n="skills.disclaimer">Autoevaluación orientativa; no representa una métrica oficial.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="container">
+          <div class="section-heading horizontal reveal">
+            <div>
+              <p class="section-index">03 — <span data-i18n="work.label">Trabajo seleccionado</span></p>
+              <h2 data-i18n="work.title">Sistemas con contexto real.</h2>
+            </div>
+            <p data-i18n="work.intro">Una selección de plataformas construidas para administración pública, operaciones, salud, turismo y comercio.</p>
+          </div>
+          <div class="projects-grid" id="projects-grid" aria-live="polite"></div>
+          <div class="section-action reveal">
+            <a class="text-link text-link-large" href="https://github.com/Jermy061?tab=repositories" target="_blank" rel="noreferrer"><span data-i18n="work.allProjects">Ver todos los repositorios</span><span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section surface-section" id="journey">
+        <div class="container journey-grid">
+          <div class="section-heading reveal">
+            <p class="section-index">04 — <span data-i18n="journey.label">Trayectoria</span></p>
+            <h2 data-i18n="journey.title">Aprender, aplicar y volver a mejorar.</h2>
+            <p data-i18n="journey.intro">Una formación en curso acompañada de práctica constante en proyectos completos.</p>
+          </div>
+          <div class="timeline reveal">
+            <article class="timeline-item current">
+              <div class="timeline-marker"></div>
+              <div class="timeline-meta"><span data-i18n="journey.current">Actualidad</span><small>UNTRM</small></div>
+              <div><h3 data-i18n="journey.degree">Ingeniería de Sistemas</h3><p data-i18n="journey.degreeDetail">VIII ciclo · Tercio superior · Universidad Nacional Toribio Rodríguez de Mendoza</p></div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-meta"><span data-i18n="journey.continuous">Formación continua</span><small>DataCamp</small></div>
+              <div><h3>Software Development with Claude Code</h3><p data-i18n="journey.courseOneDetail">Flujos modernos de desarrollo asistido y automatización aplicada.</p></div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-meta"><span data-i18n="journey.continuous">Formación continua</span><small>Udemy</small></div>
+              <div><h3>Angular: de cero a experto</h3><p data-i18n="journey.courseTwoDetail">Desarrollo de aplicaciones frontend con Angular.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section activity-section">
+        <div class="container activity-grid">
+          <div class="activity-copy reveal">
+            <p class="section-index">05 — GitHub</p>
+            <h2 data-i18n="activity.title">El trabajo también vive en el historial.</h2>
+            <p data-i18n="activity.description">La práctica diaria, la documentación y la mejora incremental forman parte de mi manera de construir software.</p>
+            <a class="text-link" href="https://github.com/Jermy061" target="_blank" rel="noreferrer"><span>@Jermy061</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="activity-card reveal reveal-delay">
+            <img src="assets/activity-graph.svg" alt="Actividad de GitHub de Jermy Cubas" data-i18n-alt="activity.graphAlt" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact">
+        <div class="container contact-card reveal">
+          <div class="contact-mark" aria-hidden="true"><img src="assets/logo-jscs-transparent.png" alt="" /></div>
+          <p class="section-index">06 — <span data-i18n="contact.label">Contacto</span></p>
+          <h2 data-i18n="contact.title">¿Tienes un proceso que debería funcionar mejor?</h2>
+          <p data-i18n="contact.description">Conversemos sobre tu sistema, producto o colaboración. Una buena solución comienza entendiendo el problema.</p>
+          <div class="contact-actions">
+            <a class="button button-inverse" href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="contact.emailCta">Escribirme por correo</span><span aria-hidden="true">↗</span></a>
+            <a class="text-link contact-link" href="https://linkedin.com/in/jermy-sneyder-cubas-solsol-54890a238" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div><strong>Jermy Cubas Solsol</strong><span data-i18n="footer.location">Bagua, Amazonas, Perú</span></div>
+        <p>© <span id="year"></span> JSCS · <span data-i18n="footer.built">Diseñado y construido con propósito.</span></p>
+        <a href="#top" aria-label="Volver arriba">↑</a>
+      </div>
+    </footer>
+
+    <dialog class="project-dialog" id="project-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-shell">
+        <button class="dialog-close icon-button" id="dialog-close" type="button" aria-label="Cerrar">×</button>
+        <div id="dialog-content"></div>
+      </div>
+    </dialog>
+
+    <script src="data.js"></script>
+    <script src="demos.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
