@@ -12,7 +12,10 @@ const types = {
   ".svg": "image/svg+xml",
   ".png": "image/png",
   ".jpeg": "image/jpeg",
-  ".jpg": "image/jpeg"
+  ".jpg": "image/jpeg",
+  ".webp": "image/webp",
+  ".mp4": "video/mp4",
+  ".webm": "video/webm"
 };
 
 createServer(async (request, response) => {

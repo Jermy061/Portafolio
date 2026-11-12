@@ -58,8 +58,10 @@
     let url = '';
     try { const parsed = new URL(config.url); if (parsed.protocol === 'https:') url = parsed.href; } catch { /* Unconfigured demo. */ }
     const image = /^(assets\/[\w./-]+|https:\/\/[^\s]+)$/.test(config.image || '') ? config.image : '';
-    return { ...config, url, image };
+    const video = /^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(config.video || '') ? config.video : '';
+    return { ...config, url, image, video };
   };
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const demoAction = (demo) => demo.url
     ? `<a class="demo-button" href="${escapeHtml(demo.url)}" target="_blank" rel="noopener noreferrer">${demoLabels().try}<span aria-hidden="true"> ↗</span></a>`
     : `<button class="demo-button" type="button" disabled>${demoLabels().soon}</button>`;
@@ -69,14 +71,17 @@
     const description = projectText(project, 'description');
     const techPreview = project.technologies.slice(0, 4).map((tech) => `<span>${tech}</span>`).join('');
     return `
-      <article class="project-card reveal" style="--project-accent:${project.accent}" data-project-id="${project.id}">
+      <article class="project-card reveal" style="--project-accent:${project.accent};--card-delay:${(index % 2) * 90}ms" data-project-id="${project.id}">
         <div class="project-preview" aria-hidden="true">
           <div class="preview-toolbar"><i></i><i></i><i></i><span>${String(index + 1).padStart(2, '0')} / ${String(data.projects.length).padStart(2, '0')}</span></div>
-          ${demo.image ? `<img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" />` : `<div class="preview-canvas">
+          ${demo.video ? `<div class="preview-media"><video class="demo-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}" preload="none"` : 'preload="metadata"'} muted loop playsinline disablepictureinpicture tabindex="-1"></video><span class="preview-badge">▶ ${demoLabels().video}</span></div>` : demo.image ? `<div class="preview-media"><img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" /></div>` : `<div class="preview-canvas">
             <span class="preview-category">${project.category}</span>
             <strong>${project.name}</strong>
             <div class="preview-lines"><i></i><i></i><i></i></div>
             <div class="preview-orbit"></div>
+            <div class="preview-chart"><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="preview-cursor"></span>
+            <span class="preview-progress"></span>
           </div><span class="demo-preview-note">${demoLabels().preview}</span>`}
         </div>
         <div class="project-body">
@@ -100,6 +105,10 @@
       button.addEventListener('click', () => openProject(button.dataset.openProject));
     });
     observeReveals(projectsGrid);
+    projectsGrid.querySelectorAll('.project-card').forEach((card) => {
+      if (playObserver) playObserver.observe(card);
+      else card.classList.add('in-view');
+    });
   }
 
   const openProject = (projectId) => {
@@ -118,6 +127,7 @@
       </div>
       <section class="demo-panel">
         <h3>${demoLabels().title}</h3>
+        ${demo.video ? `<video class="dialog-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}"` : ''} preload="metadata" controls playsinline aria-label="${escapeHtml(`${demoLabels().watch} · ${project.name}`)}"></video>` : ''}
         <p>${demo.url ? demoLabels().help : demoLabels().pending}</p>
         ${demo.url && instructions ? `<h4>${demoLabels().steps}</h4><p class="demo-instructions">${escapeHtml(instructions)}</p>` : ''}
         ${demoAction(demo)}
@@ -144,6 +154,7 @@
   };
 
   const closeProject = () => {
+    dialogContent.querySelectorAll('video').forEach((video) => video.pause());
     if (typeof projectDialog.close === 'function') projectDialog.close();
     else projectDialog.removeAttribute('open');
     document.body.classList.remove('dialog-open');
@@ -192,6 +203,19 @@
       }, { threshold: 0.12, rootMargin: '0px 0px -40px' })
     : null;
 
+  // Las vistas animadas y los videos solo corren mientras la ficha está en pantalla.
+  const playObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('in-view', entry.isIntersecting);
+          const video = entry.target.querySelector('.demo-video');
+          if (!video) return;
+          if (entry.isIntersecting && !reducedMotion) video.play().catch(() => {});
+          else video.pause();
+        });
+      }, { threshold: 0.35 })
+    : null;
+
   function observeReveals(root = document) {
     root.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => {
       if (revealObserver) revealObserver.observe(element);
@@ -223,7 +247,72 @@
   projectDialog.addEventListener('click', (event) => {
     if (event.target === projectDialog) closeProject();
   });
-  projectDialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+  projectDialog.addEventListener('close', () => {
+    dialogContent.querySelectorAll('video').forEach((video) => video.pause());
+    document.body.classList.remove('dialog-open');
+  });
+
+  // Barra de progreso de lectura y sombra del encabezado.
+  const header = document.querySelector('.site-header');
+  const progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  header.append(progress);
+  let scrollQueued = false;
+  const updateScroll = () => {
+    scrollQueued = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+    header.classList.toggle('is-scrolled', window.scrollY > 12);
+  };
+  window.addEventListener('scroll', () => {
+    if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateScroll); }
+  }, { passive: true });
+  updateScroll();
+
+  if (!reducedMotion) {
+    // Cinta continua de tecnologías.
+    const techLine = document.querySelector('.tech-line');
+    if (techLine) {
+      const set = `${techLine.innerHTML.trim()}<i></i>`;
+      techLine.innerHTML = `<div class="tech-track">${set}<span class="tech-clone" aria-hidden="true">${set.repeat(3)}</span></div>`;
+      techLine.classList.add('is-marquee');
+    }
+
+    // Terminal del retrato: escribe y borra comandos.
+    const typed = document.querySelector('.code-card strong');
+    if (typed) {
+      const commands = ['build --with-purpose', 'test --every-flow', 'deploy --secure', 'ship --on-time'];
+      let command = 0;
+      let length = commands[0].length;
+      let erasing = true;
+      typed.classList.add('is-typing');
+      const tick = () => {
+        length += erasing ? -1 : 1;
+        typed.textContent = commands[command].slice(0, length);
+        let wait = erasing ? 34 : 68;
+        if (erasing && length === 0) { erasing = false; command = (command + 1) % commands.length; wait = 380; }
+        else if (!erasing && length === commands[command].length) { erasing = true; wait = 2400; }
+        setTimeout(tick, wait);
+      };
+      setTimeout(tick, 3200);
+    }
+
+    // Conteo del indicador numérico de la portada.
+    const counter = document.querySelector('.hero-meta strong');
+    const target = Number(counter?.textContent);
+    if (counter && Number.isInteger(target) && target > 0) {
+      const width = counter.textContent.length;
+      const started = performance.now() + 700;
+      const step = (now) => {
+        const t = Math.min(Math.max((now - started) / 900, 0), 1);
+        counter.textContent = String(Math.round(target * (1 - (1 - t) ** 3))).padStart(width, '0');
+        if (t < 1) requestAnimationFrame(step);
+      };
+      counter.textContent = '0'.padStart(width, '0');
+      requestAnimationFrame(step);
+    }
+  }
 
   document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
   setThemeAssets(document.documentElement.dataset.theme);

@@ -727,3 +727,125 @@ html[data-theme="dark"] .signature-card img { filter: brightness(0) invert(1); }
   .project-card:nth-child(4) .project-preview { min-height: 265px; }
   .contact-card { border-radius: 20px; }
 }
+
+/* Movimiento y video: entradas, bucles ambientales, vistas previas animadas
+   y reproductores. El bloque prefers-reduced-motion anterior los neutraliza. */
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes portrait-in { from { opacity: 0; transform: translateY(22px) scale(.96); } }
+@keyframes portrait-zoom { from { transform: scale(1.09); } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(14px) scale(.9); } }
+@keyframes float { 50% { transform: translateY(-9px); } }
+@keyframes sway { to { transform: rotate(8.5deg) scale(1.015); } }
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes mark { to { background-size: 100% .26em; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pulse) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 11px transparent; } }
+@keyframes marquee { to { transform: translateX(-25%); } }
+@keyframes card-in { from { opacity: 0; transform: translateY(30px) scale(.985); } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(26px) scale(.965); } }
+@keyframes line-draw { 0% { transform: scaleX(0); opacity: 1; } 12%, 88% { transform: scaleX(1); opacity: 1; } 96%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes bar-grow { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+@keyframes cursor-path { 0%, 100% { transform: translate(12%, 80%); } 22%, 30% { transform: translate(34%, 55%); } 55%, 63% { transform: translate(74%, 60%); } }
+@keyframes cursor-click { 0%, 22%, 31%, 55%, 64%, 100% { opacity: 0; transform: scale(.2); } 23%, 56% { opacity: .55; transform: scale(.3); } 30%, 63% { opacity: 0; transform: scale(1); } }
+@keyframes progress-run { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Encabezado */
+.site-header { transition: box-shadow 240ms ease; }
+.site-header.is-scrolled { box-shadow: 0 12px 34px rgba(20, 26, 22, .08); }
+.scroll-progress { position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: var(--brand); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+.icon-button svg { transition: transform 420ms cubic-bezier(.2,.7,.2,1); }
+#theme-toggle:hover svg { transform: rotate(40deg); }
+.button > span[aria-hidden], .text-link > span[aria-hidden], .project-link > span[aria-hidden] { display: inline-block; transition: transform 200ms ease; }
+.button:hover > span[aria-hidden], .text-link:hover > span[aria-hidden], .project-link:hover > span[aria-hidden] { transform: translateX(4px); }
+
+/* Portada */
+.hero-copy > * { animation: rise 820ms cubic-bezier(.2,.7,.2,1) backwards; }
+.hero-copy > :nth-child(1) { animation-delay: 60ms; }
+.hero-copy > :nth-child(2) { animation-delay: 150ms; }
+.hero-copy > :nth-child(3) { animation-delay: 240ms; }
+.hero-copy > :nth-child(4) { animation-delay: 330ms; }
+.hero-copy > :nth-child(5) { animation-delay: 420ms; }
+.hero h1 em { background: linear-gradient(var(--brand-soft), var(--brand-soft)) no-repeat 0 90% / 0% .26em; -webkit-box-decoration-break: clone; box-decoration-break: clone; animation: mark 900ms cubic-bezier(.2,.7,.2,1) 950ms forwards; }
+.status-dot { --pulse: #4f9b73; animation: pulse-ring 2.4s ease-out infinite; }
+.hero-backdrop::after { animation: spin 110s linear infinite; }
+.hero-visual::before { animation: sway 9s ease-in-out infinite alternate; }
+.portrait-frame { animation: portrait-in 1100ms cubic-bezier(.2,.7,.2,1) 160ms backwards; }
+.portrait-frame > img { animation: portrait-zoom 2200ms cubic-bezier(.2,.7,.2,1) 160ms backwards; }
+.code-card { animation: pop-in 620ms cubic-bezier(.2,.9,.3,1.2) 900ms backwards, float 6.5s ease-in-out 1600ms infinite; }
+.location-card { animation: pop-in 620ms cubic-bezier(.2,.9,.3,1.2) 1100ms backwards, float 7.5s ease-in-out 2600ms infinite; }
+.code-card strong { min-height: 1.65em; }
+.code-card strong.is-typing::after { content: ""; display: inline-block; width: 7px; height: 1.1em; margin-left: 3px; vertical-align: text-bottom; background: var(--brand); animation: blink 1s steps(1) infinite; }
+
+/* Cinta de tecnologías */
+.tech-line.is-marquee { flex: 1 1 auto; width: 100%; min-width: 0; max-width: 640px; flex-wrap: nowrap; justify-content: flex-start; gap: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.tech-track { display: flex; align-items: center; width: max-content; animation: marquee 22s linear infinite; }
+.tech-clone { display: contents; }
+.tech-track span:not(.tech-clone), .tech-track i { flex-shrink: 0; margin-right: 22px; white-space: nowrap; }
+.tech-line.is-marquee:hover .tech-track { animation-play-state: paused; }
+
+/* Secciones */
+.reveal-delay-sm { transition-delay: 90ms; }
+.capability-icon { transition: transform 260ms cubic-bezier(.2,.7,.2,1), background 260ms ease, border-color 260ms ease; }
+.capability-card:hover .capability-icon { transform: translateY(-4px) rotate(-6deg); background: var(--brand-soft); border-color: color-mix(in srgb, var(--brand) 40%, var(--line)); }
+.skills-panel.reveal .radar-wrap img { opacity: 0; transform: scale(.88) rotate(-10deg); transition: opacity 900ms ease 250ms, transform 1100ms cubic-bezier(.2,.7,.2,1) 250ms; }
+.skills-panel.is-visible .radar-wrap img { opacity: 1; transform: none; }
+.timeline.reveal .timeline-item { opacity: 0; transform: translateX(-16px); transition: opacity 620ms ease, transform 620ms cubic-bezier(.2,.7,.2,1); }
+.timeline.is-visible .timeline-item { opacity: 1; transform: none; }
+.timeline .timeline-item:nth-child(1) { transition-delay: 120ms; }
+.timeline .timeline-item:nth-child(2) { transition-delay: 250ms; }
+.timeline .timeline-item:nth-child(3) { transition-delay: 380ms; }
+.timeline-item.current .timeline-marker { --pulse: var(--brand); animation: pulse-ring 2.6s ease-out infinite; }
+.activity-card.reveal img { clip-path: inset(0 100% 0 0); transition: clip-path 1300ms cubic-bezier(.3,.7,.2,1) 300ms; }
+.activity-card.is-visible img { clip-path: inset(0); }
+.contact-card::before { animation: spin 95s linear infinite; }
+.contact-mark { animation: float 8s ease-in-out infinite; }
+
+/* Fichas de proyectos */
+.project-card.reveal { opacity: 0; transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease; }
+.project-card.reveal.is-visible { opacity: 1; animation: card-in 760ms cubic-bezier(.2,.7,.2,1) var(--card-delay, 0ms) backwards; }
+.project-card.reveal.is-visible:hover { transform: translateY(-5px); }
+.demo-button:not(:disabled) { transition: transform 180ms ease, box-shadow 180ms ease; }
+.demo-button:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0, 0, 0, .16); }
+.demo-status.is-live::before { animation: blink 1.8s ease-in-out infinite; }
+
+/* Vista previa animada (se usa mientras la ficha no tenga video ni captura) */
+.preview-lines i { transform-origin: left; animation: line-draw 8s cubic-bezier(.3,.7,.2,1) infinite; }
+.preview-lines i:nth-child(2) { animation-delay: 160ms; }
+.preview-lines i:nth-child(3) { animation-delay: 320ms; }
+.preview-orbit { animation: spin 46s linear infinite; }
+.preview-chart { position: absolute; right: 34px; bottom: 32px; height: 86px; display: flex; align-items: flex-end; gap: 7px; }
+.preview-chart i { width: 11px; height: 45%; border-radius: 4px 4px 1px 1px; background: color-mix(in srgb, var(--project-accent) 62%, var(--surface)); transform-origin: bottom; animation: bar-grow 2.6s ease-in-out infinite alternate; }
+.preview-chart i:nth-child(2) { height: 72%; animation-delay: -1.1s; }
+.preview-chart i:nth-child(3) { height: 54%; animation-delay: -2s; }
+.preview-chart i:nth-child(4) { height: 100%; animation-delay: -.5s; }
+.preview-chart i:nth-child(5) { height: 66%; animation-delay: -1.6s; }
+.preview-cursor { position: absolute; inset: 0; pointer-events: none; transform: translate(12%, 80%); animation: cursor-path 8s cubic-bezier(.5,.1,.3,1) infinite; }
+.preview-cursor::before { content: ""; position: absolute; left: 0; top: 0; width: 13px; height: 17px; background: var(--text); clip-path: polygon(0 0, 0 100%, 28% 74%, 48% 100%, 64% 92%, 46% 66%, 82% 66%); }
+.preview-cursor::after { content: ""; position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%; background: var(--project-accent); opacity: 0; animation: cursor-click 8s linear infinite; }
+.preview-progress { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--project-accent); transform: scaleX(0); transform-origin: left; animation: progress-run 8s linear infinite; }
+.project-card:not(.in-view) .preview-canvas *,
+.project-card:not(.in-view) .preview-canvas *::before,
+.project-card:not(.in-view) .preview-canvas *::after { animation-play-state: paused; }
+
+/* Video y captura */
+.preview-media { position: relative; height: 238px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--project-accent) 24%, var(--line)); border-top: 0; border-radius: 0 0 8px 8px; background: var(--surface); }
+.preview-media .demo-screenshot, .demo-video { display: block; width: 100%; height: 100%; border: 0; border-radius: 0; object-fit: cover; object-position: top center; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
+.project-card:hover .preview-media > :is(img, video) { transform: scale(1.035); }
+.preview-badge { position: absolute; left: 12px; bottom: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(12, 16, 13, .72); color: #fff; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(6px); }
+.dialog-video { display: block; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 10px; background: #0c100d; }
+
+/* Diálogo */
+.project-dialog[open] { animation: dialog-in 340ms cubic-bezier(.2,.8,.2,1); }
+.project-dialog[open]::backdrop { animation: fade-in 260ms ease; }
+.project-dialog[open] .dialog-grid li { animation: rise 520ms cubic-bezier(.2,.7,.2,1) backwards; }
+.project-dialog[open] .dialog-grid li:nth-child(1) { animation-delay: 140ms; }
+.project-dialog[open] .dialog-grid li:nth-child(2) { animation-delay: 200ms; }
+.project-dialog[open] .dialog-grid li:nth-child(3) { animation-delay: 260ms; }
+.project-dialog[open] .dialog-grid li:nth-child(n+4) { animation-delay: 320ms; }
+
+@media (max-width: 560px) {
+  .preview-media { height: 205px; }
+  .preview-chart { right: 22px; bottom: 24px; height: 64px; gap: 5px; }
+  .preview-chart i { width: 8px; }
+}

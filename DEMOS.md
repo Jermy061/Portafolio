@@ -17,6 +17,29 @@ transporte: {
 },
 ```
 
+## Videos
+
+Cada ficha admite un video corto del sistema en uso. Guárdalo en `dist/assets/` y añade el campo `video`:
+
+```js
+transporte: {
+  url: 'https://tu-demo.example.com',
+  image: 'assets/transporte-demo.webp',   // se usa como portada del video
+  video: 'assets/transporte-demo.mp4',
+  instructions: { es: '…', en: '…' }
+},
+```
+
+- Formatos: `.mp4` (H.264) o `.webm`. También vale una URL `https://…` que termine en `.mp4` o `.webm`.
+- En la ficha se reproduce en bucle y sin sonido mientras está en pantalla; en «Ver caso» aparece con controles y audio.
+- Recomendado: 15–40 s, 1280×720, menos de 8 MB, grabado con datos ficticios.
+- Sin video ni captura, la ficha muestra una vista animada ilustrativa.
+- Con «reducir movimiento» activado en el sistema, el video no se reproduce solo y las animaciones se desactivan.
+
+`node .\validate.mjs` comprueba que el archivo exista y tenga un formato admitido.
+
+## Enlaces
+
 Solo se activan enlaces HTTPS. Con `url: ''`, la ficha muestra «Demo próximamente» y el botón permanece deshabilitado. Las capturas vacías conservan una vista ilustrativa claramente identificada. Las instrucciones admiten también `pt`, `fr` y `de`; si faltan, se muestra español.
 
 Para agregar otro sistema, añade su ficha multilingüe en `dist/data.js` y su configuración con el mismo `id` en `dist/demos.js`. No hay límite fijo de siete sistemas.

@@ -62,6 +62,13 @@ for (const [id, demo] of Object.entries(sandbox.window.PORTFOLIO_DEMOS)) {
     try { await access(resolve(dist, demo.image)); }
     catch { errors.push(`Falta captura: ${demo.image}`); }
   }
+  if (demo.video) {
+    if (!/^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(demo.video)) errors.push(`Video inválido en ${id}: usa assets/… o https://… terminado en .mp4 o .webm`);
+    else if (demo.video.startsWith('assets/')) {
+      try { await access(resolve(dist, demo.video)); }
+      catch { errors.push(`Falta video: ${demo.video}`); }
+    }
+  }
 }
 
 if (errors.length) {
