@@ -5,7 +5,15 @@ window.PORTFOLIO_DEMOS = {
   transporte: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
   'asp-levanto': { url: '', image: '', video: '', instructions: { es: '', en: '' } },
   vetcare: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
-  taller: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
+  taller: {
+    url: 'https://taller-demo-jscs.vercel.app',
+    image: '',
+    video: '',
+    instructions: {
+      es: 'Pulsa «Iniciar sesión» y entra con un rol de prueba: Propietario, Asesor, Técnico o Caja. Crea clientes, presupuestos y órdenes, y cobra en caja. Los datos son ficticios y se reinician cada hora.',
+      en: 'Click "Iniciar sesión" and sign in with a test role: Owner, Advisor, Technician or Cashier. Create customers, quotes and work orders, and take payments at the till. All data is fictitious and resets every hour.'
+    }
+  },
   'levanto-tur': { url: '', image: '', video: '', instructions: { es: '', en: '' } },
   restobar: { url: '', image: '', video: '', instructions: { es: '', en: '' } }
 };
