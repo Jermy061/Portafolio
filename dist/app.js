@@ -60,7 +60,8 @@
     const image = /^(assets\/[\w./-]+|https:\/\/[^\s]+)$/.test(config.image || '') ? config.image : '';
     const video = /^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(config.video || '') ? config.video : '';
     const slides = (Array.isArray(config.slides) ? config.slides : []).filter((slide) => /^assets\/[\w./-]+\.(jpe?g|png|webp|avif)$/i.test(slide?.image || ''));
-    return { ...config, url, image, video, slides };
+    const chapters = (Array.isArray(config.chapters) ? config.chapters : []).filter((chapter) => Number.isFinite(chapter?.t));
+    return { ...config, url, image, video, slides, chapters };
   };
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Pasarela de capturas reales de la demo: avanza sola, como una historia.
@@ -89,6 +90,60 @@
     show.querySelector('.slide-text').textContent = slides[index].dataset.caption || '';
   };
 
+  // Video con capítulos: qué se está viendo en cada momento, separado en sitio público y panel.
+  const localized = (value) => value?.[currentLanguage] || value?.en || value?.es || '';
+  const clock = (seconds) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+  const chapterData = (demo) => escapeHtml(JSON.stringify(demo.chapters.map((chapter) => ({ t: chapter.t, group: chapter.group, label: demoLabels()[chapter.group] || '', caption: localized(chapter.caption) }))));
+  const chapterOverlay = (demo) => `
+    <div class="slide-segments" aria-hidden="true">${demo.chapters.map(() => '<span class="slide-seg"><i></i></span>').join('')}</div>
+    <div class="slide-caption"><span class="chapter-tag"></span><span class="slide-text"></span></div>`;
+  const chapterChips = (demo) => {
+    const groups = [];
+    demo.chapters.forEach((chapter) => {
+      if (groups.at(-1)?.id !== chapter.group) groups.push({ id: chapter.group, items: [] });
+      groups.at(-1).items.push(chapter);
+    });
+    return `<div class="chapter-groups">${groups.map((group) => `
+      <div class="chapter-group">
+        <span class="chapter-group-title">${escapeHtml(demoLabels()[group.id] || '')}</span>
+        <div class="chapter-chips">${group.items.map((chapter) => `<button class="chapter-chip" type="button" data-seek="${chapter.t}"><span>${clock(chapter.t)}</span>${escapeHtml(localized(chapter.title))}</button>`).join('')}</div>
+      </div>`).join('')}</div>`;
+  };
+  const setupChapterVideo = (box) => {
+    const video = box.querySelector('video');
+    let chapters = [];
+    try { chapters = JSON.parse(box.dataset.chapters || '[]'); } catch { /* Sin capítulos. */ }
+    if (!video || !chapters.length) return;
+    const segments = [...box.querySelectorAll('.slide-seg')];
+    const chips = [...box.querySelectorAll('[data-seek]')];
+    const tag = box.querySelector('.chapter-tag');
+    const text = box.querySelector('.slide-text');
+    let current = -1;
+    const sync = () => {
+      const duration = video.duration || chapters.at(-1).t + 4;
+      const now = video.currentTime;
+      let index = 0;
+      chapters.forEach((chapter, i) => { if (now >= chapter.t - 0.05) index = i; });
+      segments.forEach((segment, i) => {
+        const start = chapters[i].t;
+        const end = chapters[i + 1]?.t ?? duration;
+        segment.style.flexGrow = String(Math.max(end - start, 0.5));
+        segment.firstElementChild.style.transform = `scaleX(${Math.min(1, Math.max(0, (now - start) / (end - start)))})`;
+      });
+      if (index === current) return;
+      current = index;
+      if (tag) { tag.textContent = chapters[index].label; tag.dataset.group = chapters[index].group; }
+      if (text) text.textContent = chapters[index].caption;
+      chips.forEach((chip, i) => chip.classList.toggle('is-current', i === index));
+    };
+    ['timeupdate', 'loadedmetadata', 'seeked'].forEach((name) => video.addEventListener(name, sync));
+    chips.forEach((chip) => chip.addEventListener('click', () => {
+      video.currentTime = Number(chip.dataset.seek);
+      video.play().catch(() => {});
+    }));
+    sync();
+  };
+
   const demoAction = (demo) => demo.url
     ? `<a class="demo-button" href="${escapeHtml(demo.url)}" target="_blank" rel="noopener noreferrer">${demoLabels().try}<span aria-hidden="true"> ↗</span></a>`
     : `<button class="demo-button" type="button" disabled>${demoLabels().soon}</button>`;
@@ -101,7 +156,7 @@
       <article class="project-card reveal" style="--project-accent:${project.accent};--card-delay:${(index % 2) * 90}ms" data-project-id="${project.id}">
         <div class="project-preview" aria-hidden="true">
           <div class="preview-toolbar"><i></i><i></i><i></i><span>${String(index + 1).padStart(2, '0')} / ${String(data.projects.length).padStart(2, '0')}</span></div>
-          ${demo.slides.length && !demo.video ? `<div class="preview-media has-slides">${slideshow(demo)}</div>` : demo.video ? `<div class="preview-media"><video class="demo-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}" preload="none"` : 'preload="metadata"'} muted loop playsinline disablepictureinpicture tabindex="-1"></video><span class="preview-badge">▶ ${demoLabels().video}</span></div>` : demo.image ? `<div class="preview-media"><img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" /></div>` : `<div class="preview-canvas">
+          ${demo.slides.length && !demo.video ? `<div class="preview-media has-slides">${slideshow(demo)}</div>` : demo.video ? `<div class="preview-media${demo.chapters.length ? ' has-chapters' : ''}"${demo.chapters.length ? ` data-chapters="${chapterData(demo)}"` : ''}><video class="demo-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}" preload="none"` : 'preload="metadata"'} muted loop playsinline disablepictureinpicture tabindex="-1"></video>${demo.chapters.length ? chapterOverlay(demo) : `<span class="preview-badge">▶ ${demoLabels().video}</span>`}</div>` : demo.image ? `<div class="preview-media"><img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" /></div>` : `<div class="preview-canvas">
             <span class="preview-category">${project.category}</span>
             <strong>${project.name}</strong>
             <div class="preview-lines"><i></i><i></i><i></i></div>
@@ -132,6 +187,7 @@
       button.addEventListener('click', () => openProject(button.dataset.openProject));
     });
     observeReveals(projectsGrid);
+    projectsGrid.querySelectorAll('[data-chapters]').forEach(setupChapterVideo);
     projectsGrid.querySelectorAll('.project-card').forEach((card) => {
       if (playObserver) playObserver.observe(card);
       else card.classList.add('in-view');
@@ -154,7 +210,7 @@
       </div>
       <section class="demo-panel">
         <h3>${demoLabels().title}</h3>
-        ${demo.video ? `<video class="dialog-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}"` : ''} preload="metadata" controls playsinline aria-label="${escapeHtml(`${demoLabels().watch} · ${project.name}`)}"></video>` : ''}
+        ${demo.video ? `<div class="dialog-player"${demo.chapters.length ? ` data-chapters="${chapterData(demo)}"` : ''}><video class="dialog-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}"` : ''} preload="metadata" controls playsinline aria-label="${escapeHtml(`${demoLabels().watch} · ${project.name}`)}"></video>${demo.chapters.length ? chapterChips(demo) : ''}</div>` : ''}
         ${demo.slides.length && !demo.video ? `<p class="overline slide-heading">${demoLabels().tour}</p>${slideshow(demo, { controls: true })}` : ''}
         <p>${demo.url ? demoLabels().help : demoLabels().pending}</p>
         ${demo.url && instructions ? `<h4>${demoLabels().steps}</h4><p class="demo-instructions">${escapeHtml(instructions)}</p>` : ''}
@@ -176,6 +232,7 @@
         <span>${translate('work.repository')}</span><span aria-hidden="true">↗</span>
       </a>`;
 
+    dialogContent.querySelectorAll('[data-chapters]').forEach(setupChapterVideo);
     if (typeof projectDialog.showModal === 'function') projectDialog.showModal();
     else projectDialog.setAttribute('open', '');
     document.body.classList.add('dialog-open');

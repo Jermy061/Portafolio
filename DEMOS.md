@@ -69,3 +69,24 @@ taller: {
 - En la ficha avanza sola mientras está en pantalla; en «Ver caso» se ve más grande, con flechas, y se pausa al pasar el cursor.
 - Si la ficha tiene `video`, se muestra el video y no la pasarela.
 - Con «reducir movimiento» activado no avanza sola: se ve la primera captura y en «Ver caso» se pasa con las flechas.
+
+## Capítulos del video
+
+Un video puede llevar capítulos: la ficha muestra qué se está viendo en cada momento y «Ver caso» permite saltar a cada parte. Añade `chapters` junto a `video`:
+
+```js
+taller: {
+  url: 'https://tu-demo.example.com',
+  image: 'assets/demos/taller-poster.jpg',
+  video: 'assets/demos/taller-demo.webm',
+  chapters: [
+    { t: 0, group: 'public', title: { es: 'Web del taller', en: 'Workshop website' }, caption: { es: 'La web pública del taller', en: 'The public website' } },
+    { t: 32.2, group: 'panel', title: { es: 'Acceso por rol', en: 'Role sign-in' }, caption: { es: 'Entra al panel con un clic', en: 'One-click sign-in' } }
+  ],
+  instructions: { es: '…', en: '…' }
+},
+```
+
+- `t` es el segundo del video en que empieza el capítulo, en orden creciente.
+- `group` es `public` (sitio público) o `panel` (panel de gestión).
+- `title` es el nombre corto del botón; `caption`, la frase que aparece sobre el video. Ambos necesitan `es` y `en`.

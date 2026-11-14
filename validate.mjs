@@ -67,6 +67,14 @@ for (const [id, demo] of Object.entries(sandbox.window.PORTFOLIO_DEMOS)) {
     else { try { await access(resolve(dist, slide.image)); } catch { errors.push(`Falta lámina: ${slide.image}`); } }
     if (!(slide.caption?.es && slide.caption?.en)) errors.push(`La lámina ${n + 1} de ${id} necesita título en es y en`);
   }
+  let previous = -1;
+  for (const [n, chapter] of (demo.chapters || []).entries()) {
+    if (!Number.isFinite(chapter.t) || chapter.t <= previous) errors.push(`Capítulo ${n + 1} de ${id}: t debe ser un número creciente`);
+    previous = chapter.t;
+    if (!sandbox.window.DEMO_LABELS.es[chapter.group]) errors.push(`Capítulo ${n + 1} de ${id}: grupo desconocido «${chapter.group}»`);
+    for (const field of ['title', 'caption']) if (!(chapter[field]?.es && chapter[field]?.en)) errors.push(`Capítulo ${n + 1} de ${id}: falta ${field} en es o en`);
+  }
+  if (demo.chapters?.length && !demo.video) errors.push(`La demo ${id} tiene capítulos pero no video`);
   if (demo.video) {
     if (!/^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(demo.video)) errors.push(`Video inválido en ${id}: usa assets/… o https://… terminado en .mp4 o .webm`);
     else if (demo.video.startsWith('assets/')) {
