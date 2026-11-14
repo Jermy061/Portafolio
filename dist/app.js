@@ -59,9 +59,36 @@
     try { const parsed = new URL(config.url); if (parsed.protocol === 'https:') url = parsed.href; } catch { /* Unconfigured demo. */ }
     const image = /^(assets\/[\w./-]+|https:\/\/[^\s]+)$/.test(config.image || '') ? config.image : '';
     const video = /^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(config.video || '') ? config.video : '';
-    return { ...config, url, image, video };
+    const slides = (Array.isArray(config.slides) ? config.slides : []).filter((slide) => /^assets\/[\w./-]+\.(jpe?g|png|webp|avif)$/i.test(slide?.image || ''));
+    return { ...config, url, image, video, slides };
   };
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Pasarela de capturas reales de la demo: avanza sola, como una historia.
+  const slideCaption = (slide) => slide.caption?.[currentLanguage] || slide.caption?.en || slide.caption?.es || '';
+  const slideCount = (index, total) => `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  const slideshow = (demo, { controls = false } = {}) => `
+    <div class="slideshow${controls ? ' has-controls' : ''}" data-slideshow data-index="0"${controls ? ` role="group" aria-roledescription="carousel" aria-label="${escapeHtml(demoLabels().tour)}"` : ''}>
+      ${demo.slides.map((slide, i) => `<img class="slide${i === 0 ? ' is-active' : ''}" src="${escapeHtml(slide.image)}" alt="${controls ? escapeHtml(slideCaption(slide)) : ''}" data-caption="${escapeHtml(slideCaption(slide))}" loading="lazy" decoding="async" />`).join('')}
+      <div class="slide-segments" aria-hidden="true">${demo.slides.map((_, i) => `<span class="slide-seg${i === 0 ? ' is-active' : ''}"><i></i></span>`).join('')}</div>
+      <div class="slide-caption"><span class="slide-count">${slideCount(0, demo.slides.length)}</span><span class="slide-text"${controls ? ' aria-live="polite"' : ''}>${escapeHtml(slideCaption(demo.slides[0]))}</span></div>
+      ${controls ? `<button class="slide-nav is-prev" type="button" data-slide-step="-1" aria-label="${escapeHtml(demoLabels().prev)}">‹</button><button class="slide-nav is-next" type="button" data-slide-step="1" aria-label="${escapeHtml(demoLabels().next)}">›</button>` : ''}
+    </div>`;
+  const goToSlide = (show, target) => {
+    const slides = [...show.querySelectorAll('.slide')];
+    if (!slides.length) return;
+    const index = ((target % slides.length) + slides.length) % slides.length;
+    show.dataset.index = String(index);
+    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+    show.querySelectorAll('.slide-seg').forEach((segment, i) => {
+      segment.classList.toggle('is-done', i < index);
+      segment.classList.remove('is-active');
+      // Reinicia la animación de progreso del segmento activo.
+      if (i === index) { void segment.offsetWidth; segment.classList.add('is-active'); }
+    });
+    show.querySelector('.slide-count').textContent = slideCount(index, slides.length);
+    show.querySelector('.slide-text').textContent = slides[index].dataset.caption || '';
+  };
+
   const demoAction = (demo) => demo.url
     ? `<a class="demo-button" href="${escapeHtml(demo.url)}" target="_blank" rel="noopener noreferrer">${demoLabels().try}<span aria-hidden="true"> ↗</span></a>`
     : `<button class="demo-button" type="button" disabled>${demoLabels().soon}</button>`;
@@ -74,7 +101,7 @@
       <article class="project-card reveal" style="--project-accent:${project.accent};--card-delay:${(index % 2) * 90}ms" data-project-id="${project.id}">
         <div class="project-preview" aria-hidden="true">
           <div class="preview-toolbar"><i></i><i></i><i></i><span>${String(index + 1).padStart(2, '0')} / ${String(data.projects.length).padStart(2, '0')}</span></div>
-          ${demo.video ? `<div class="preview-media"><video class="demo-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}" preload="none"` : 'preload="metadata"'} muted loop playsinline disablepictureinpicture tabindex="-1"></video><span class="preview-badge">▶ ${demoLabels().video}</span></div>` : demo.image ? `<div class="preview-media"><img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" /></div>` : `<div class="preview-canvas">
+          ${demo.slides.length && !demo.video ? `<div class="preview-media has-slides">${slideshow(demo)}</div>` : demo.video ? `<div class="preview-media"><video class="demo-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}" preload="none"` : 'preload="metadata"'} muted loop playsinline disablepictureinpicture tabindex="-1"></video><span class="preview-badge">▶ ${demoLabels().video}</span></div>` : demo.image ? `<div class="preview-media"><img class="demo-screenshot" src="${escapeHtml(demo.image)}" alt="" loading="lazy" /></div>` : `<div class="preview-canvas">
             <span class="preview-category">${project.category}</span>
             <strong>${project.name}</strong>
             <div class="preview-lines"><i></i><i></i><i></i></div>
@@ -128,6 +155,7 @@
       <section class="demo-panel">
         <h3>${demoLabels().title}</h3>
         ${demo.video ? `<video class="dialog-video" src="${escapeHtml(demo.video)}" ${demo.image ? `poster="${escapeHtml(demo.image)}"` : ''} preload="metadata" controls playsinline aria-label="${escapeHtml(`${demoLabels().watch} · ${project.name}`)}"></video>` : ''}
+        ${demo.slides.length && !demo.video ? `<p class="overline slide-heading">${demoLabels().tour}</p>${slideshow(demo, { controls: true })}` : ''}
         <p>${demo.url ? demoLabels().help : demoLabels().pending}</p>
         ${demo.url && instructions ? `<h4>${demoLabels().steps}</h4><p class="demo-instructions">${escapeHtml(instructions)}</p>` : ''}
         ${demoAction(demo)}
@@ -234,6 +262,18 @@
     }, { rootMargin: '-35% 0px -60% 0px' });
     sections.forEach((section) => sectionObserver.observe(section));
   }
+
+  // La pasarela avanza cuando termina la barra de progreso del segmento activo;
+  // el CSS la pausa fuera de pantalla y con «reducir movimiento» no avanza sola.
+  document.addEventListener('animationend', (event) => {
+    if (reducedMotion || event.animationName !== 'slide-progress') return;
+    const show = event.target.closest?.('[data-slideshow]');
+    if (show) goToSlide(show, Number(show.dataset.index) + 1);
+  });
+  document.addEventListener('click', (event) => {
+    const show = event.target.closest?.('[data-slide-step]')?.closest('[data-slideshow]');
+    if (show) goToSlide(show, Number(show.dataset.index) + Number(event.target.closest('[data-slide-step]').dataset.slideStep));
+  });
 
   languageSelect.addEventListener('change', (event) => {
     currentLanguage = event.target.value;

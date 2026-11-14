@@ -47,3 +47,25 @@ Para agregar otro sistema, añade su ficha multilingüe en `dist/data.js` y su c
 Esto es un catálogo de enlaces, no un panel para subir o ejecutar aplicaciones. Cada sistema requiere su propio despliegue; el portafolio abre la demo en una pestaña nueva.
 
 No publiques claves de producción ni información personal. Usa datos ficticios, permisos limitados y pagos en modo prueba. Cualquier credencial que escribas aquí será pública; utiliza exclusivamente cuentas de demostración aisladas.
+
+## Pasarela de capturas
+
+En lugar de un video, una ficha puede mostrar una pasarela de capturas reales que avanza sola, con una barra de progreso y un título por pantalla. Añade el campo `slides`:
+
+```js
+taller: {
+  url: 'https://tu-demo.example.com',
+  image: 'assets/demos/taller-03-resumen.jpg',
+  slides: [
+    { image: 'assets/demos/taller-01-web.jpg', caption: { es: 'Web pública del taller', en: 'Public workshop website' } },
+    { image: 'assets/demos/taller-04-ordenes.jpg', caption: { es: 'Órdenes de trabajo', en: 'Work orders' } }
+  ],
+  instructions: { es: '…', en: '…' }
+},
+```
+
+- Capturas en 16:9 (por ejemplo 1120×630), en `.jpg`, `.png`, `.webp` o `.avif`, con datos ficticios.
+- `caption` necesita al menos `es` y `en`; los demás idiomas usan el inglés si faltan.
+- En la ficha avanza sola mientras está en pantalla; en «Ver caso» se ve más grande, con flechas, y se pausa al pasar el cursor.
+- Si la ficha tiene `video`, se muestra el video y no la pasarela.
+- Con «reducir movimiento» activado no avanza sola: se ve la primera captura y en «Ver caso» se pasa con las flechas.

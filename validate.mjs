@@ -62,6 +62,11 @@ for (const [id, demo] of Object.entries(sandbox.window.PORTFOLIO_DEMOS)) {
     try { await access(resolve(dist, demo.image)); }
     catch { errors.push(`Falta captura: ${demo.image}`); }
   }
+  for (const [n, slide] of (demo.slides || []).entries()) {
+    if (!/^assets\/[\w./-]+\.(jpe?g|png|webp|avif)$/i.test(slide.image || '')) errors.push(`Lámina ${n + 1} inválida en ${id}: usa assets/… en jpg, png, webp o avif`);
+    else { try { await access(resolve(dist, slide.image)); } catch { errors.push(`Falta lámina: ${slide.image}`); } }
+    if (!(slide.caption?.es && slide.caption?.en)) errors.push(`La lámina ${n + 1} de ${id} necesita título en es y en`);
+  }
   if (demo.video) {
     if (!/^(assets\/[\w./-]+|https:\/\/[^\s"'<>]+)\.(mp4|webm)$/i.test(demo.video)) errors.push(`Video inválido en ${id}: usa assets/… o https://… terminado en .mp4 o .webm`);
     else if (demo.video.startsWith('assets/')) {
