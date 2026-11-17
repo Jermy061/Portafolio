@@ -889,7 +889,8 @@ html[data-theme="dark"] .signature-card img { filter: brightness(0) invert(1); }
 
 /* Video con capítulos */
 .preview-media.has-chapters { height: auto; aspect-ratio: 16 / 9; }
-.preview-media.has-chapters::before { content: ""; position: absolute; inset: 0 0 auto; height: 44px; z-index: 1; background: linear-gradient(rgba(8, 11, 9, .7), transparent); pointer-events: none; }
+/* Sin barra de segmentos sobre el video: tapaba la parte de arriba de la grabación. */
+.has-chapters .slide-segments { display: none; }
 .has-chapters .slide-seg i { transition: transform 280ms linear; }
 .has-chapters .slide-caption { align-items: center; }
 .chapter-tag { flex: none; padding: 3px 8px; border-radius: 99px; background: rgba(255, 255, 255, .16); color: #fff; font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
