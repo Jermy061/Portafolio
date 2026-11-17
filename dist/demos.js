@@ -3,7 +3,15 @@
 window.PORTFOLIO_DEMOS = {
   sigetram: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
   transporte: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
-  'asp-levanto': { url: '', image: '', video: '', instructions: { es: '', en: '' } },
+  'asp-levanto': {
+    url: 'https://levanto-demo-jscs.vercel.app',
+    image: 'assets/demos/levanto-poster.jpg',
+    video: '',
+    instructions: {
+      es: 'Pulsa «Iniciar sesión» y entra con un clic como Presidente, Administrador o Empleado. Registra leche, ventas y gastos, abre la caja y revisa los reportes. En la tienda puedes comprar y pagar con la tarjeta de prueba 4242 4242 4242 4242 en una pasarela simulada: no se cobra nada. Los datos son ficticios y se reinician cada hora.',
+      en: 'Click "Iniciar sesión" and sign in with one click as President, Administrator or Employee. Record milk deliveries, sales and expenses, open the till and check the reports. In the shop you can buy and pay with the test card 4242 4242 4242 4242 on a simulated checkout: nothing is charged. All data is fictitious and resets every hour.'
+    }
+  },
   vetcare: { url: '', image: '', video: '', instructions: { es: '', en: '' } },
   taller: {
     url: 'https://taller-demo-jscs.vercel.app',
