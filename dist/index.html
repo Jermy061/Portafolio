@@ -16,8 +16,7 @@
     <script>
       (() => {
         const saved = localStorage.getItem('jscs-theme');
-        const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.dataset.theme = saved || (dark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = saved || 'dark';
       })();
     </script>
   </head>
@@ -74,6 +73,7 @@
         <div class="hero-backdrop" aria-hidden="true"></div>
         <div class="container hero-grid">
           <div class="hero-copy reveal">
+            <div class="hero-edition" aria-hidden="true"><span>PORTFOLIO</span><small>JSCS / 01</small></div>
             <p class="eyebrow"><span class="status-dot"></span><span data-i18n="hero.eyebrow">Disponible para colaborar</span></p>
             <h1><span data-i18n="hero.title">Construyo sistemas que convierten procesos complejos en</span> <em data-i18n="hero.emphasis">experiencias claras.</em></h1>
             <p class="hero-lead" data-i18n="hero.lead">Soy Jermy Cubas Solsol, desarrollador Full Stack y estudiante de Ingeniería de Sistemas. Diseño plataformas de gestión, pagos y operaciones con una mirada práctica, segura y escalable.</p>
