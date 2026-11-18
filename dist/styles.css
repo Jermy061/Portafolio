@@ -960,3 +960,11 @@ html[data-theme="dark"] .signature-card img { filter: brightness(0) invert(1); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+
+/* El marco de cada demo retoma la paleta de su página principal. */
+.project-card:is([data-project-id="transporte"], [data-project-id="asp-levanto"], [data-project-id="vetcare"]) {
+  border-color: color-mix(in srgb, var(--project-accent) 45%, var(--line));
+}
+.project-card:is([data-project-id="transporte"], [data-project-id="asp-levanto"], [data-project-id="vetcare"]) .project-body {
+  background: color-mix(in srgb, var(--project-accent) 7%, var(--surface));
+}
