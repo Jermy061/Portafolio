@@ -21,7 +21,7 @@
   --pill-ink: #051220;
   --brand: #8fcbff;
   --brand-soft: rgba(143, 203, 255, .12);
-  --red: #c8102e;
+  --shape: #1c6fc4;
   --display-top: #f1f1f1;
   --display-bottom: #8a8d91;
   --header: rgba(1, 2, 3, .78);
@@ -208,14 +208,14 @@ main { padding: 96px 0 24px; display: grid; gap: 28px; }
 .cover { min-height: min(820px, calc(100vh - 120px)); display: flex; flex-direction: column; justify-content: center; padding-left: 0; }
 .cover-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 70px); align-items: center; }
 .cover-portrait { position: relative; aspect-ratio: 1 / 1.08; max-height: 540px; }
-.cover-d { position: absolute; inset: 0; border-radius: 0 50% 50% 0 / 0 50% 50% 0; background: radial-gradient(circle at 35% 40%, #e0233f, var(--red) 55%, #7d0a1c); box-shadow: 0 30px 80px rgba(200, 16, 46, .28); }
+.cover-d { position: absolute; inset: 0; border-radius: 0 50% 50% 0 / 0 50% 50% 0; background: linear-gradient(150deg, #bcdcff 0%, #5aa9f0 28%, var(--shape) 58%, #0a2f5c 100%); box-shadow: 0 30px 90px rgba(40, 130, 230, .35); }
 .cover-portrait img {
   position: absolute; inset: 7% 9% 0 18%; width: 73%; height: 93%;
   object-fit: cover; object-position: 30% 58%;
   border-radius: 0 50% 50% 0 / 0 50% 50% 0;
   filter: grayscale(.15) contrast(1.05);
 }
-.cover-portrait::after { content: ""; position: absolute; inset: 7% 9% 0 18%; border-radius: 0 50% 50% 0 / 0 50% 50% 0; background: linear-gradient(transparent 55%, rgba(80, 0, 12, .55)); pointer-events: none; }
+.cover-portrait::after { content: ""; position: absolute; inset: 7% 9% 0 18%; border-radius: 0 50% 50% 0 / 0 50% 50% 0; background: linear-gradient(transparent 55%, rgba(4, 26, 54, .6)); pointer-events: none; }
 .cover-title { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 18px; }
 .cover-title .display { font-size: clamp(64px, 10vw, 140px); line-height: .82; }
 .cover-title .cover-year { font-size: clamp(34px, 4.4vw, 60px); line-height: .9; padding-bottom: .1em; }
