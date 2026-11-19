@@ -49,7 +49,27 @@
     });
 
     renderProjects();
+    renderReport();
   };
+
+  // Reporte mensual de GitHub: barras propias, con meses en el idioma activo.
+  function renderReport() {
+    const chart = document.querySelector('#report-chart');
+    if (!chart || !Array.isArray(data.activity)) return;
+    const max = Math.max(...data.activity.map(([, value]) => value), 1);
+    const monthName = new Intl.DateTimeFormat(currentLanguage, { month: 'short', timeZone: 'UTC' });
+    chart.setAttribute('aria-label', translate('me.reportChartAlt'));
+    chart.innerHTML = data.activity.map(([month, value]) => {
+      const [year, number] = month.split('-').map(Number);
+      const label = monthName.format(new Date(Date.UTC(year, number - 1, 15))).replace('.', '');
+      const peak = value === max ? ' is-peak' : '';
+      return `<div class="report-bar${peak}" title="${escapeHtml(label)} ${year}: ${value}">
+        <span class="report-value">${value || ''}</span>
+        <i style="--h:${(value / max) * 100}%"></i>
+        <span class="report-month">${escapeHtml(label)}</span>
+      </div>`;
+    }).join('');
+  }
 
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   const demoLabels = () => window.DEMO_LABELS[currentLanguage] || window.DEMO_LABELS.es;
