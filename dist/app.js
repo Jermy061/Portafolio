@@ -266,14 +266,7 @@
   };
 
   const setThemeAssets = (theme) => {
-    themeColor.setAttribute('content', theme === 'dark' ? '#111714' : '#f7f5f0');
-    document.querySelectorAll('.radar-wrap picture').forEach((picture) => {
-      const image = picture.querySelector('img');
-      const source = picture.querySelector('source');
-      const path = theme === 'dark' ? 'assets/radar-dark.svg' : 'assets/radar-light.svg';
-      image.src = path;
-      if (source) source.srcset = path;
-    });
+    themeColor.setAttribute('content', theme === 'dark' ? '#03060a' : '#cfd8e1');
   };
 
   const toggleTheme = () => {
@@ -397,7 +390,7 @@
     }
 
     // Terminal del retrato: escribe y borra comandos.
-    const typed = document.querySelector('.code-card strong');
+    const typed = document.querySelector('.cover-console strong');
     if (typed) {
       const commands = ['build --with-purpose', 'test --every-flow', 'deploy --secure', 'ship --on-time'];
       let command = 0;
@@ -431,7 +424,8 @@
     }
   }
 
-  document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
+  const year = String(new Date().getFullYear());
+  ['#year', '#cover-year', '#thanks-year'].forEach((selector) => document.querySelector(selector)?.replaceChildren(year));
   setThemeAssets(document.documentElement.dataset.theme);
   applyTranslations();
   observeReveals();

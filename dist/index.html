@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f5f0" />
+    <meta name="theme-color" content="#03060a" />
     <meta name="description" content="Portafolio profesional de Jermy Cubas Solsol, desarrollador Full Stack especializado en sistemas de gestión." />
     <meta name="author" content="Jermy Cubas Solsol" />
     <meta property="og:type" content="website" />
@@ -11,11 +11,15 @@
     <meta property="og:description" content="Sistemas de gestión, plataformas web y experiencias digitales construidas desde Bagua, Perú." />
     <meta property="og:image" content="assets/banner-jermy.png" />
     <link rel="icon" type="image/png" href="assets/logo-jscs-transparent.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="styles.css" />
     <title>Jermy Cubas Solsol · Full Stack Developer</title>
     <script>
       (() => {
-        const saved = localStorage.getItem('jscs-theme');
+        let saved = null;
+        try { saved = localStorage.getItem('jscs-theme'); } catch {}
         document.documentElement.dataset.theme = saved || 'dark';
       })();
     </script>
@@ -24,7 +28,7 @@
     <a class="skip-link" href="#main" data-i18n="a11y.skip">Saltar al contenido</a>
 
     <header class="site-header" id="top">
-      <div class="container header-inner">
+      <div class="header-inner">
         <a class="brand" href="#home" aria-label="Jermy Cubas Solsol — Inicio">
           <span class="brand-logo" aria-hidden="true"><img src="assets/logo-jscs-transparent.png" alt="" /></span>
           <span class="brand-copy"><strong>Jermy Cubas</strong><small>Full Stack Developer</small></span>
@@ -36,6 +40,7 @@
           <a href="#work" data-i18n="nav.work">Proyectos</a>
           <a href="#journey" data-i18n="nav.journey">Trayectoria</a>
           <a href="#me" data-i18n="nav.me">Más de mí</a>
+          <a href="#contact" data-i18n="nav.contact">Contacto</a>
         </nav>
 
         <div class="header-actions">
@@ -53,7 +58,6 @@
             <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
             <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
           </button>
-          <a class="button button-small desktop-contact" href="#contact" data-i18n="nav.contact">Contacto</a>
           <button class="icon-button menu-button" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
             <span></span><span></span>
           </button>
@@ -71,224 +75,244 @@
     </header>
 
     <main id="main">
-      <section class="hero section" id="home">
-        <div class="hero-backdrop" aria-hidden="true"></div>
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <div class="hero-edition" aria-hidden="true"><span>PORTFOLIO</span><small>JSCS / 01</small></div>
-            <p class="eyebrow"><span class="status-dot"></span><span data-i18n="hero.eyebrow">Disponible para colaborar</span></p>
-            <h1><span data-i18n="hero.title">Construyo sistemas que convierten procesos complejos en</span> <em data-i18n="hero.emphasis">experiencias claras.</em></h1>
-            <p class="hero-lead" data-i18n="hero.lead">Soy Jermy Cubas Solsol, desarrollador Full Stack y estudiante de Ingeniería de Sistemas. Diseño plataformas de gestión, pagos y operaciones con una mirada práctica, segura y escalable.</p>
-            <div class="hero-actions">
-              <a class="button" href="#work"><span data-i18n="hero.primaryCta">Explorar proyectos</span><span aria-hidden="true">↘</span></a>
-              <a class="text-link" href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="hero.secondaryCta">Hablemos de una idea</span><span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="hero-meta" aria-label="Resumen profesional">
-              <li><strong>07</strong><span data-i18n="hero.metaProjects">sistemas destacados</span></li>
-              <li><strong>VIII</strong><span data-i18n="hero.metaCycle">ciclo · UNTRM</span></li>
-              <li><strong>PE</strong><span data-i18n="hero.metaLocation">Bagua, Amazonas</span></li>
-            </ul>
+      <!-- 00 · Portada: retrato en forma de D, título de edición y menú de inicio -->
+      <section class="screen cover" id="home">
+        <div class="cover-grid">
+          <div class="cover-portrait reveal">
+            <div class="cover-d" aria-hidden="true"></div>
+            <img src="assets/portrait.png" alt="Retrato de Jermy Cubas Solsol" data-i18n-alt="hero.photoAlt" />
           </div>
 
-          <div class="hero-visual reveal reveal-delay">
-            <div class="portrait-frame">
-              <img src="assets/portrait.png" alt="Retrato de Jermy Cubas Solsol" data-i18n-alt="hero.photoAlt" />
-              <div class="portrait-gradient" aria-hidden="true"></div>
-              <div class="portrait-caption">
-                <span class="caption-label" data-i18n="hero.roleLabel">Enfoque actual</span>
-                <strong>Full Stack · Systems</strong>
-              </div>
-            </div>
-            <div class="floating-card code-card" aria-hidden="true">
-              <span>jermy@bagua:~$</span>
-              <strong>build --with-purpose</strong>
-            </div>
-            <div class="floating-card location-card"><span aria-hidden="true">⌁</span><span data-i18n="hero.locationCard">Construyendo desde Perú</span></div>
+          <div class="cover-copy">
+            <div class="cover-title reveal" aria-hidden="true"><span class="display">Portfolio</span><span class="cover-year display" id="cover-year">2026</span></div>
+            <p class="cover-check reveal"><span class="checkbox" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Disponible para colaborar</span></p>
+            <h1 class="reveal"><span data-i18n="hero.title">Construyo sistemas que convierten procesos complejos en</span> <em data-i18n="hero.emphasis">experiencias claras.</em></h1>
+            <p class="cover-lead reveal" data-i18n="hero.lead">Soy Jermy Cubas Solsol, desarrollador Full Stack y estudiante de Ingeniería de Sistemas. Diseño plataformas de gestión, pagos y operaciones con una mirada práctica, segura y escalable.</p>
+
+            <nav class="start-menu reveal" aria-label="Inicio">
+              <a href="#work"><span data-i18n="hero.primaryCta">Explorar proyectos</span></a>
+              <a href="#me"><span data-i18n="nav.me">Más de mí</span></a>
+              <a href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="hero.secondaryCta">Hablemos de una idea</span></a>
+            </nav>
           </div>
+        </div>
+
+        <div class="cover-foot">
+          <ul class="hero-meta" aria-label="Resumen profesional">
+            <li><strong>07</strong><span data-i18n="hero.metaProjects">sistemas destacados</span></li>
+            <li><strong>VIII</strong><span data-i18n="hero.metaCycle">ciclo · UNTRM</span></li>
+            <li><strong>PE</strong><span data-i18n="hero.metaLocation">Bagua, Amazonas</span></li>
+          </ul>
+          <div class="cover-console" aria-hidden="true"><span>jermy@bagua:~$</span> <strong class="code-card-text">build --with-purpose</strong></div>
+          <p class="cover-location"><span class="caption-label" data-i18n="hero.roleLabel">Enfoque actual</span> <strong>Full Stack · Systems</strong> · <span data-i18n="hero.locationCard">Construyendo desde Perú</span></p>
         </div>
       </section>
 
-      <section class="identity-strip" aria-label="Tecnologías principales">
-        <div class="container identity-inner">
-          <p data-i18n="stack.label">Tecnologías con las que construyo</p>
-          <div class="tech-line" aria-label="TypeScript, Next.js, React, Node.js, PostgreSQL, Prisma">
-            <span>TypeScript</span><i></i><span>Next.js</span><i></i><span>React</span><i></i><span>Node.js</span><i></i><span>PostgreSQL</span><i></i><span>Prisma</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="about">
-        <div class="container about-grid">
-          <div class="section-heading reveal">
-            <p class="section-index">01 — <span data-i18n="about.label">Perfil</span></p>
-            <h2 data-i18n="about.title">Tecnología cercana, útil y pensada para durar.</h2>
-          </div>
-          <div class="about-content reveal">
-            <p class="about-lead" data-i18n="about.lead">Me interesa el punto donde la ingeniería se encuentra con las necesidades reales: digitalizar un trámite, ordenar una operación o conectar un pago sin añadir complejidad innecesaria.</p>
-            <div class="about-columns">
-              <p data-i18n="about.paragraphOne">Actualmente curso el VIII ciclo de Ingeniería de Sistemas en la Universidad Nacional Toribio Rodríguez de Mendoza y pertenezco al tercio superior. Desarrollo soluciones web de extremo a extremo y continúo fortaleciendo arquitectura, calidad y despliegue.</p>
-              <p data-i18n="about.paragraphTwo">Mi trabajo reúne interfaces claras, lógica de negocio, bases de datos y servicios externos. He participado en sistemas municipales, transporte, salud veterinaria, turismo, asociaciones productivas y operaciones comerciales.</p>
+      <!-- 01 · Perfil: retrato con brillo, sobre mí, tecnologías, formación -->
+      <section class="screen profile" id="about">
+        <div class="profile-grid">
+          <div class="profile-side reveal">
+            <p class="hello" data-i18n="about.hello">Hola, soy</p>
+            <p class="hello-name">Jermy Cubas Solsol</p>
+            <div class="profile-photo">
+              <img src="assets/portrait.png" alt="" loading="lazy" />
             </div>
             <div class="signature-row">
               <div class="signature-card"><img src="assets/firma-digital.png" alt="Firma de Jermy Cubas Solsol" /></div>
-              <div><strong>Jermy Cubas Solsol</strong><span data-i18n="about.signatureRole">Full Stack Developer · Systems Engineering</span></div>
+              <span data-i18n="about.signatureRole">Full Stack Developer · Systems Engineering</span>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="section surface-section" id="capabilities">
-        <div class="container">
-          <div class="section-heading horizontal reveal">
-            <div>
-              <p class="section-index">02 — <span data-i18n="capabilities.label">Especialidades</span></p>
-              <h2 data-i18n="capabilities.title">Del proceso al producto.</h2>
-            </div>
-            <p data-i18n="capabilities.intro">Combino producto, desarrollo y operación para entregar sistemas completos, no piezas aisladas.</p>
-          </div>
-
-          <div class="capability-grid">
-            <article class="capability-card reveal">
-              <span class="capability-number">01</span>
-              <div class="capability-icon" aria-hidden="true">⌘</div>
-              <h3 data-i18n="capabilities.custom.title">Desarrollo Full Stack</h3>
-              <p data-i18n="capabilities.custom.description">Interfaces responsivas, APIs, autenticación y lógica de negocio conectadas en una experiencia consistente.</p>
-              <div class="mini-stack"><span data-i18n="capabilities.custom.tagOne">Ventas</span><span data-i18n="capabilities.custom.tagTwo">Caja</span><span data-i18n="capabilities.custom.tagThree">Inventario</span></div>
-            </article>
-            <article class="capability-card reveal reveal-delay-sm">
-              <span class="capability-number">02</span>
-              <div class="capability-icon" aria-hidden="true">▦</div>
-              <h3 data-i18n="capabilities.web.title">Sistemas de gestión</h3>
-              <p data-i18n="capabilities.web.description">Flujos operativos, roles, trazabilidad, reportes y paneles administrativos adaptados a cada organización.</p>
-              <div class="mini-stack"><span data-i18n="capabilities.web.tagOne">Página web</span><span data-i18n="capabilities.web.tagTwo">Celular</span><span data-i18n="capabilities.web.tagThree">Reservas</span></div>
-            </article>
-            <article class="capability-card reveal reveal-delay-lg">
-              <span class="capability-number">03</span>
-              <div class="capability-icon" aria-hidden="true">◇</div>
-              <h3 data-i18n="capabilities.payments.title">Datos e integraciones</h3>
-              <p data-i18n="capabilities.payments.description">Modelado relacional, pagos digitales, servicios externos y despliegues con observabilidad y calidad.</p>
-              <div class="mini-stack"><span data-i18n="capabilities.payments.tagOne">Pagos en línea</span><span data-i18n="capabilities.payments.tagTwo">Reportes</span><span data-i18n="capabilities.payments.tagThree">Control</span></div>
-            </article>
-          </div>
-
-          <div class="process-panel reveal">
-            <div class="process-head">
-              <p class="overline" data-i18n="process.overline">Cómo trabajamos</p>
-              <h3 data-i18n="process.title">Un proceso simple, de la primera conversación a la entrega.</h3>
-            </div>
-            <ol class="process-steps">
-              <li><span class="process-num">1</span><h4 data-i18n="process.stepOne.title">Te escucho</h4><p data-i18n="process.stepOne.text">Me cuentas cómo funciona hoy tu negocio y qué te quita más tiempo.</p></li>
-              <li><span class="process-num">2</span><h4 data-i18n="process.stepTwo.title">Te muestro una demo</h4><p data-i18n="process.stepTwo.text">Pruebas el sistema antes de terminarlo y pides los cambios que necesites.</p></li>
-              <li><span class="process-num">3</span><h4 data-i18n="process.stepThree.title">Lo ponemos en marcha</h4><p data-i18n="process.stepThree.text">Publico el sistema y te enseño a usarlo, a ti y a tu equipo.</p></li>
-              <li><span class="process-num">4</span><h4 data-i18n="process.stepFour.title">Te acompaño</h4><p data-i18n="process.stepFour.text">Sigo disponible para ajustes y mejoras cuando tu negocio crezca.</p></li>
-            </ol>
-            <p class="process-tech"><span data-i18n="process.techLabel">Para equipos técnicos:</span> TypeScript · React · Next.js · Node.js · PostgreSQL · Prisma · Docker · Vercel</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="work">
-        <div class="container">
-          <div class="section-heading horizontal reveal">
-            <div>
-              <p class="section-index">03 — <span data-i18n="work.label">Trabajo seleccionado</span></p>
-              <h2 data-i18n="work.title">Sistemas con contexto real.</h2>
-            </div>
-            <p data-i18n="work.intro">Una selección de plataformas construidas para administración pública, operaciones, salud, turismo y comercio.</p>
-          </div>
-          <div class="projects-grid" id="projects-grid" aria-live="polite"></div>
-          <div class="section-action reveal">
-            <a class="text-link text-link-large" href="https://github.com/Jermy061?tab=repositories" target="_blank" rel="noreferrer"><span data-i18n="work.allProjects">Ver todos los repositorios</span><span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section surface-section" id="journey">
-        <div class="container journey-grid">
-          <div class="section-heading reveal">
-            <p class="section-index">04 — <span data-i18n="journey.label">Trayectoria</span></p>
-            <h2 data-i18n="journey.title">Aprender, aplicar y volver a mejorar.</h2>
-            <p data-i18n="journey.intro">Una formación en curso acompañada de práctica constante en proyectos completos.</p>
-          </div>
-          <div class="timeline reveal">
-            <article class="timeline-item current">
-              <div class="timeline-marker"></div>
-              <div class="timeline-meta"><span data-i18n="journey.current">Actualidad</span><small>UNTRM</small></div>
-              <div><h3 data-i18n="journey.degree">Ingeniería de Sistemas</h3><p data-i18n="journey.degreeDetail">VIII ciclo · Tercio superior · Universidad Nacional Toribio Rodríguez de Mendoza</p></div>
-            </article>
-            <article class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-meta"><span data-i18n="journey.continuous">Formación continua</span><small>DataCamp</small></div>
-              <div><h3>Software Development with Claude Code</h3><p data-i18n="journey.courseOneDetail">Flujos modernos de desarrollo asistido y automatización aplicada.</p></div>
-            </article>
-            <article class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-meta"><span data-i18n="journey.continuous">Formación continua</span><small>Udemy</small></div>
-              <div><h3>Angular: de cero a experto</h3><p data-i18n="journey.courseTwoDetail">Desarrollo de aplicaciones frontend con Angular.</p></div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section me-section" id="me">
-        <div class="container">
-          <div class="me-intro reveal">
-            <div class="section-heading">
-              <p class="section-index">05 — <span data-i18n="me.label">Más de mí</span></p>
-              <h2 data-i18n="me.title">Quién está detrás de cada sistema.</h2>
-            </div>
-            <p class="me-lead" data-i18n="me.lead">Soy de Bagua, Amazonas. Estudio Ingeniería de Sistemas en la UNTRM y, en paralelo, construyo sistemas reales para negocios e instituciones. Antes de escribir código, me gusta entender cómo trabaja cada persona que lo va a usar.</p>
-          </div>
-
-          <ul class="me-facts reveal">
-            <li><strong>7</strong><span data-i18n="me.factSystems">sistemas construidos</span></li>
-            <li><strong>4</strong><span data-i18n="me.factDemos">demos que puedes probar hoy</span></li>
-            <li><strong>464</strong><span data-i18n="me.factCommits">aportes de código en el último año</span></li>
-            <li><strong>⅓</strong><span data-i18n="me.factRank">tercio superior de mi carrera</span></li>
-          </ul>
-
-          <div class="me-grid">
-            <div class="me-learnings reveal">
-              <p class="overline" data-i18n="me.learningsLabel">Lo que me han enseñado mis proyectos</p>
-              <ol>
-                <li><h3 data-i18n="me.learnOne.title">Escuchar antes de programar</h3><p data-i18n="me.learnOne.text">En el sistema municipal entendí que un trámite se digitaliza bien solo cuando primero conoces cómo lo hace la gente.</p></li>
-                <li><h3 data-i18n="me.learnTwo.title">Trabajar en equipo</h3><p data-i18n="me.learnTwo.text">Construí sistemas con equipos de tres y cuatro personas, coordinando cambios sin pisar el trabajo de nadie.</p></li>
-                <li><h3 data-i18n="me.learnThree.title">Cuidar el dinero de otros</h3><p data-i18n="me.learnThree.text">Al integrar pagos en línea aprendí a probar cada cobro en modo de prueba antes de mover dinero real.</p></li>
-                <li><h3 data-i18n="me.learnFour.title">Proteger la información</h3><p data-i18n="me.learnFour.text">En VetCare cada cambio queda registrado: quién lo hizo y cuándo. Así el dueño siempre sabe qué pasó.</p></li>
-              </ol>
-            </div>
-
-            <figure class="me-report reveal reveal-delay">
-              <div class="report-head">
-                <p class="overline" data-i18n="me.reportLabel">Mi reporte de trabajo</p>
-                <h3 data-i18n="me.reportTitle">Constancia que se puede comprobar.</h3>
-                <p data-i18n="me.reportText">Cada barra es un mes de trabajo registrado en GitHub, la plataforma donde guardo el código de mis proyectos.</p>
+          <div class="profile-main">
+            <div class="reveal">
+              <p class="tab-label">01 — <span data-i18n="about.label">Perfil</span></p>
+              <h2 class="display display-md" data-i18n="about.title">Tecnología cercana, útil y pensada para durar.</h2>
+              <p class="profile-lead" data-i18n="about.lead">Me interesa el punto donde la ingeniería se encuentra con las necesidades reales: digitalizar un trámite, ordenar una operación o conectar un pago sin añadir complejidad innecesaria.</p>
+              <div class="about-columns">
+                <p data-i18n="about.paragraphOne">Actualmente curso el VIII ciclo de Ingeniería de Sistemas en la Universidad Nacional Toribio Rodríguez de Mendoza y pertenezco al tercio superior. Desarrollo soluciones web de extremo a extremo y continúo fortaleciendo arquitectura, calidad y despliegue.</p>
+                <p data-i18n="about.paragraphTwo">Mi trabajo reúne interfaces claras, lógica de negocio, bases de datos y servicios externos. He participado en sistemas municipales, transporte, salud veterinaria, turismo, asociaciones productivas y operaciones comerciales.</p>
               </div>
-              <div class="report-highlight"><strong>384</strong><span data-i18n="me.reportHighlight">aportes entre septiembre y octubre de 2026, mi etapa más productiva del año</span></div>
-              <div class="report-chart" id="report-chart" role="img"></div>
-              <figcaption><span data-i18n="me.reportSource">Fuente: GitHub · nov 2025 – oct 2026 · incluye proyectos privados</span> · <a href="https://github.com/Jermy061" target="_blank" rel="noreferrer"><span data-i18n="me.reportLink">Ver mi perfil</span> <span aria-hidden="true">↗</span></a></figcaption>
-            </figure>
+            </div>
+
+            <div class="tool-block reveal">
+              <h3 class="display display-sm" data-i18n="stack.label">Tecnologías con las que construyo</h3>
+              <ul class="tool-icons" aria-label="TypeScript, Next.js, React, Node.js, PostgreSQL, Prisma">
+                <li><span class="tool" style="--tool:#3178c6">TS</span><small>TypeScript</small></li>
+                <li><span class="tool" style="--tool:#111;--tool-line:#fff">N</span><small>Next.js</small></li>
+                <li><span class="tool" style="--tool:#20232a;--tool-ink:#61dafb">⚛</span><small>React</small></li>
+                <li><span class="tool" style="--tool:#3c873a">JS</span><small>Node.js</small></li>
+                <li><span class="tool" style="--tool:#336791">PG</span><small>PostgreSQL</small></li>
+                <li><span class="tool" style="--tool:#0c344b">◭</span><small>Prisma</small></li>
+              </ul>
+            </div>
+
+            <section class="journey reveal" id="journey" aria-labelledby="journey-title">
+              <div class="journey-head">
+                <p class="tab-label">04 — <span data-i18n="journey.label">Trayectoria</span></p>
+                <h3 class="display display-sm" id="journey-title" data-i18n="journey.title">Aprender, aplicar y volver a mejorar.</h3>
+                <p data-i18n="journey.intro">Una formación en curso acompañada de práctica constante en proyectos completos.</p>
+              </div>
+              <div class="journey-cols">
+                <div>
+                  <h4 data-i18n="journey.current">Actualidad</h4>
+                  <article class="journey-item current">
+                    <small>UNTRM</small>
+                    <strong data-i18n="journey.degree">Ingeniería de Sistemas</strong>
+                    <p data-i18n="journey.degreeDetail">VIII ciclo · Tercio superior · Universidad Nacional Toribio Rodríguez de Mendoza</p>
+                  </article>
+                </div>
+                <div>
+                  <h4 data-i18n="journey.continuous">Formación continua</h4>
+                  <article class="journey-item">
+                    <small>DataCamp</small>
+                    <strong>Software Development with Claude Code</strong>
+                    <p data-i18n="journey.courseOneDetail">Flujos modernos de desarrollo asistido y automatización aplicada.</p>
+                  </article>
+                  <article class="journey-item">
+                    <small>Udemy</small>
+                    <strong>Angular: de cero a experto</strong>
+                    <p data-i18n="journey.courseTwoDetail">Desarrollo de aplicaciones frontend con Angular.</p>
+                  </article>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </section>
 
-      <section class="section contact-section" id="contact">
-        <div class="container contact-card reveal">
-          <div class="contact-mark" aria-hidden="true"><img src="assets/logo-jscs-transparent.png" alt="" /></div>
-          <p class="section-index">06 — <span data-i18n="contact.label">Contacto</span></p>
-          <h2 data-i18n="contact.title">¿Tienes un proceso que debería funcionar mejor?</h2>
-          <p data-i18n="contact.description">Conversemos sobre tu sistema, producto o colaboración. Una buena solución comienza entendiendo el problema.</p>
-          <div class="contact-actions">
-            <a class="button button-inverse" href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="contact.emailCta">Escribirme por correo</span><span aria-hidden="true">↗</span></a>
-            <a class="text-link contact-link" href="https://linkedin.com/in/jermy-sneyder-cubas-solsol-54890a238" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+      <!-- 02 · Especialidades y cómo trabajamos -->
+      <section class="screen" id="capabilities">
+        <div class="screen-head reveal">
+          <p class="tab-label">02 — <span data-i18n="capabilities.label">Especialidades</span></p>
+          <h2 class="display display-lg" data-i18n="capabilities.title">Qué puedo hacer por tu negocio.</h2>
+          <p data-i18n="capabilities.intro">Sin tecnicismos: estas son las soluciones que construyo y lo que cambian en tu día a día.</p>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability-card reveal">
+            <span class="capability-number">01</span>
+            <div class="capability-icon" aria-hidden="true">⌘</div>
+            <h3 data-i18n="capabilities.custom.title">Sistemas a tu medida</h3>
+            <p data-i18n="capabilities.custom.description">Ventas, caja, inventario, citas o trámites en un solo lugar.</p>
+            <div class="mini-stack"><span data-i18n="capabilities.custom.tagOne">Ventas</span><span data-i18n="capabilities.custom.tagTwo">Caja</span><span data-i18n="capabilities.custom.tagThree">Inventario</span></div>
+          </article>
+          <article class="capability-card reveal reveal-delay-sm">
+            <span class="capability-number">02</span>
+            <div class="capability-icon" aria-hidden="true">▦</div>
+            <h3 data-i18n="capabilities.web.title">Tu negocio en internet</h3>
+            <p data-i18n="capabilities.web.description">Una página web clara donde tus clientes te encuentran.</p>
+            <div class="mini-stack"><span data-i18n="capabilities.web.tagOne">Página web</span><span data-i18n="capabilities.web.tagTwo">Celular</span><span data-i18n="capabilities.web.tagThree">Reservas</span></div>
+          </article>
+          <article class="capability-card reveal reveal-delay-lg">
+            <span class="capability-number">03</span>
+            <div class="capability-icon" aria-hidden="true">◇</div>
+            <h3 data-i18n="capabilities.payments.title">Cobros y reportes</h3>
+            <p data-i18n="capabilities.payments.description">Tus clientes pagan en línea y tú ves qué se vende.</p>
+            <div class="mini-stack"><span data-i18n="capabilities.payments.tagOne">Pagos en línea</span><span data-i18n="capabilities.payments.tagTwo">Reportes</span><span data-i18n="capabilities.payments.tagThree">Control</span></div>
+          </article>
+        </div>
+
+        <div class="process-panel reveal">
+          <div class="process-head">
+            <p class="overline" data-i18n="process.overline">Cómo trabajamos</p>
+            <h3 class="display display-sm" data-i18n="process.title">Un proceso simple, de la primera conversación a la entrega.</h3>
+          </div>
+          <ol class="process-steps">
+            <li><span class="process-num">1</span><h4 data-i18n="process.stepOne.title">Te escucho</h4><p data-i18n="process.stepOne.text">Me cuentas cómo funciona hoy tu negocio y qué te quita más tiempo.</p></li>
+            <li><span class="process-num">2</span><h4 data-i18n="process.stepTwo.title">Te muestro una demo</h4><p data-i18n="process.stepTwo.text">Pruebas el sistema antes de terminarlo y pides los cambios que necesites.</p></li>
+            <li><span class="process-num">3</span><h4 data-i18n="process.stepThree.title">Lo ponemos en marcha</h4><p data-i18n="process.stepThree.text">Publico el sistema y te enseño a usarlo, a ti y a tu equipo.</p></li>
+            <li><span class="process-num">4</span><h4 data-i18n="process.stepFour.title">Te acompaño</h4><p data-i18n="process.stepFour.text">Sigo disponible para ajustes y mejoras cuando tu negocio crezca.</p></li>
+          </ol>
+          <p class="process-tech"><span data-i18n="process.techLabel">Para equipos técnicos:</span> TypeScript · React · Next.js · Node.js · PostgreSQL · Prisma · Docker · Vercel</p>
+        </div>
+      </section>
+
+      <!-- 03 · Proyectos en cuadrícula tipo collage -->
+      <section class="screen" id="work">
+        <div class="screen-head screen-head-center reveal">
+          <p class="tab-label">03 — <span data-i18n="work.label">Trabajo seleccionado</span></p>
+          <h2 class="display display-lg"><span data-i18n="work.title">Sistemas con contexto real.</span> <small class="head-badge">07</small></h2>
+          <p data-i18n="work.intro">Una selección de plataformas construidas para administración pública, operaciones, salud, turismo y comercio.</p>
+        </div>
+        <div class="projects-grid" id="projects-grid" aria-live="polite"></div>
+        <div class="section-action reveal">
+          <a class="pill-link" href="https://github.com/Jermy061?tab=repositories" target="_blank" rel="noreferrer"><span data-i18n="work.allProjects">Ver todos los repositorios</span><span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <!-- 05 · Más de mí -->
+      <section class="screen me-section" id="me">
+        <div class="me-intro reveal">
+          <div>
+            <p class="tab-label">05 — <span data-i18n="me.label">Más de mí</span></p>
+            <h2 class="display display-lg" data-i18n="me.title">Quién está detrás de cada sistema.</h2>
+          </div>
+          <p class="me-lead" data-i18n="me.lead">Soy de Bagua, Amazonas.</p>
+        </div>
+
+        <ul class="me-facts reveal">
+          <li><strong class="display">7</strong><span data-i18n="me.factSystems">sistemas construidos</span></li>
+          <li><strong class="display">4</strong><span data-i18n="me.factDemos">demos que puedes probar hoy</span></li>
+          <li><strong class="display">464</strong><span data-i18n="me.factCommits">aportes de código en el último año</span></li>
+          <li><strong class="display">⅓</strong><span data-i18n="me.factRank">tercio superior de mi carrera</span></li>
+        </ul>
+
+        <div class="me-grid">
+          <div class="me-learnings reveal">
+            <h3 class="display display-sm" data-i18n="me.learningsLabel">Lo que me han enseñado mis proyectos</h3>
+            <ol>
+              <li><h4 data-i18n="me.learnOne.title">Escuchar antes de programar</h4><p data-i18n="me.learnOne.text"></p></li>
+              <li><h4 data-i18n="me.learnTwo.title">Trabajar en equipo</h4><p data-i18n="me.learnTwo.text"></p></li>
+              <li><h4 data-i18n="me.learnThree.title">Cuidar el dinero de otros</h4><p data-i18n="me.learnThree.text"></p></li>
+              <li><h4 data-i18n="me.learnFour.title">Proteger la información</h4><p data-i18n="me.learnFour.text"></p></li>
+            </ol>
+          </div>
+
+          <figure class="me-report reveal reveal-delay">
+            <div class="report-head">
+              <p class="overline" data-i18n="me.reportLabel">Mi reporte de trabajo</p>
+              <h3 class="display display-sm" data-i18n="me.reportTitle">Constancia que se puede comprobar.</h3>
+              <p data-i18n="me.reportText">Cada barra es un mes de trabajo registrado en GitHub.</p>
+            </div>
+            <div class="report-highlight"><strong class="display">384</strong><span data-i18n="me.reportHighlight">aportes entre septiembre y octubre de 2026</span></div>
+            <div class="report-chart" id="report-chart" role="img"></div>
+            <figcaption><span data-i18n="me.reportSource">Fuente: GitHub</span> · <a href="https://github.com/Jermy061" target="_blank" rel="noreferrer"><span data-i18n="me.reportLink">Ver mi perfil</span> <span aria-hidden="true">↗</span></a></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 06 · Contacto: foto circular, redes y cierre -->
+      <section class="screen contact" id="contact">
+        <div class="contact-grid">
+          <div class="contact-person reveal">
+            <h2 class="display display-md" data-i18n="contact.label">Contacto</h2>
+            <div class="contact-card-row">
+              <figure class="contact-photo">
+                <img src="assets/portrait.png" alt="" loading="lazy" />
+                <figcaption>Jermy Cubas Solsol</figcaption>
+              </figure>
+              <ul class="social-list">
+                <li><a href="mailto:jermysneydercubassolsol@gmail.com"><span class="social-icon" aria-hidden="true">@</span><span>Email</span></a></li>
+                <li><a href="https://linkedin.com/in/jermy-sneyder-cubas-solsol-54890a238" target="_blank" rel="noreferrer"><span class="social-icon" aria-hidden="true">in</span><span>LinkedIn</span></a></li>
+                <li><a href="https://github.com/Jermy061" target="_blank" rel="noreferrer"><span class="social-icon" aria-hidden="true">GH</span><span>@Jermy061</span></a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="contact-copy reveal reveal-delay">
+            <p class="thanks display" aria-hidden="true"><span data-i18n="contact.thanks">Gracias</span><span class="thanks-year" id="thanks-year">2026</span></p>
+            <h3 data-i18n="contact.title">¿Tienes un proceso que debería funcionar mejor?</h3>
+            <p data-i18n="contact.description">Conversemos sobre tu sistema, producto o colaboración. Una buena solución comienza entendiendo el problema.</p>
+            <a class="pill-button" href="mailto:jermysneydercubassolsol@gmail.com"><span data-i18n="contact.emailCta">Escribirme por correo</span><span aria-hidden="true">↗</span></a>
           </div>
         </div>
+        <img class="contact-mark" src="assets/logo-jscs-transparent.png" alt="" aria-hidden="true" />
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-inner">
-        <div><strong>Jermy Cubas Solsol</strong><span data-i18n="footer.location">Bagua, Amazonas, Perú</span></div>
+      <div class="footer-inner">
+        <div><strong>Jermy Cubas Solsol</strong> · <span data-i18n="footer.location">Bagua, Amazonas, Perú</span></div>
         <p>© <span id="year"></span> JSCS · <span data-i18n="footer.built">Diseñado y construido con propósito.</span></p>
         <a href="#top" aria-label="Volver arriba">↑</a>
       </div>
