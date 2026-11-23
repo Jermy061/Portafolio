@@ -216,6 +216,9 @@ main { padding: 96px 0 24px; display: grid; gap: 28px; }
   filter: grayscale(.15) contrast(1.05);
 }
 .cover-portrait::after { content: ""; position: absolute; inset: 7% 9% 0 18%; border-radius: 0 50% 50% 0 / 0 50% 50% 0; background: linear-gradient(transparent 55%, rgba(4, 26, 54, .6)); pointer-events: none; }
+.cover-d { background: linear-gradient(145deg, #7cb8e8, #24689f 52%, #08243d); box-shadow: 0 30px 90px rgba(20, 87, 145, .22); }
+.cover-portrait img { filter: saturate(.75) contrast(1.04); }
+.cover-portrait::after { background: linear-gradient(180deg, rgba(17, 65, 105, .12), transparent 40%, rgba(3, 18, 33, .7)), linear-gradient(90deg, rgba(21, 76, 120, .15), transparent 60%); }
 .cover-title { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 18px; }
 .cover-title .display { font-size: clamp(64px, 10vw, 140px); line-height: .82; }
 .cover-title .cover-year { font-size: clamp(34px, 4.4vw, 60px); line-height: .9; padding-bottom: .1em; }
@@ -388,6 +391,30 @@ html[data-theme="dark"] .signature-card img { filter: brightness(0) invert(1); }
 .project-link:hover > span[aria-hidden] { transform: translateX(3px); }
 
 .section-action { display: flex; justify-content: center; margin-top: 36px; }
+
+/* Selector de proyectos: tarjetas verticales con la vista de la demo al frente. */
+.projects-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.project-card, .project-card:nth-child(n) {
+  grid-column: auto; position: relative; min-width: 0; background: #07111c;
+  border-color: rgba(143, 203, 255, .2);
+}
+.project-card:hover, .project-card:focus-within { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand), 0 18px 45px rgba(0, 0, 0, .4); }
+.project-preview { background: #0a1a2a; }
+.preview-media, .preview-canvas { aspect-ratio: 4 / 5; }
+.preview-media .demo-screenshot, .demo-video { object-position: center top; }
+.project-preview::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(4, 15, 27, .06) 35%, #07111c 100%); }
+.project-body { position: relative; z-index: 1; flex: 1; margin-top: -80px; padding: 18px; color: #eef5fc; }
+.project-topline, .project-body > p, .project-body .demo-status { color: #c1cedb; }
+.project-topline span:first-child { color: #9ed1fa; }
+.project-body h3 { font-size: clamp(23px, 2.2vw, 30px); }
+.project-body > p { font-size: 13px; line-height: 1.5; }
+.project-body .tech-tags span { color: #c1cedb; border-color: rgba(188, 220, 255, .25); }
+.project-body .project-link { color: #eef5fc; }
+.project-body .demo-button:disabled { background: rgba(188, 220, 255, .12); color: #c1cedb; }
+[data-theme="light"] .project-card { background: #07111c; }
+@media (max-width: 1000px) { .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .projects-grid { grid-template-columns: minmax(0, 1fr); } .preview-media, .preview-canvas { aspect-ratio: 4 / 3; } }
 .pill-link, .pill-button {
   display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
   border: 1px solid var(--line-strong); border-radius: 999px;
@@ -571,7 +598,6 @@ html[data-theme="dark"] .signature-card img { filter: brightness(0) invert(1); }
 @media (max-width: 1050px) {
   .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .project-card, .project-card:nth-child(n) { grid-column: span 1; }
-  .project-card:nth-child(1) { grid-column: span 2; }
   .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .me-grid { grid-template-columns: minmax(0, 1fr); }
 }
