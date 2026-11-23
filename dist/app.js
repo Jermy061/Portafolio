@@ -165,13 +165,12 @@
   };
 
   const demoAction = (demo) => demo.url
-    ? `<a class="demo-button" href="${escapeHtml(demo.url)}" target="_blank" rel="noopener noreferrer">${demoLabels().try}<span aria-hidden="true"> ↗</span></a>`
+    ? `<a class="demo-button" href="${escapeHtml(demo.url)}" target="_blank" rel="noopener noreferrer">${demoLabels().try}</a>`
     : `<button class="demo-button" type="button" disabled>${demoLabels().soon}</button>`;
 
   const createProjectCard = (project, index) => {
     const demo = demoConfig(project);
     const description = projectText(project, 'description');
-    const techPreview = project.technologies.slice(0, 4).map((tech) => `<span>${tech}</span>`).join('');
     return `
       <article class="project-card reveal" style="--project-accent:${project.accent};--card-delay:${(index % 2) * 90}ms" data-project-id="${project.id}">
         <div class="project-preview" aria-hidden="true">
@@ -187,14 +186,13 @@
           </div><span class="demo-preview-note">${demoLabels().preview}</span>`}
         </div>
         <div class="project-body">
-          <div class="project-topline"><span>${project.category}</span><span>${String(index + 1).padStart(2, '0')}</span></div>
+          <div class="project-topline"><span>${project.category}</span></div>
           <h3>${project.name}</h3>
           <span class="demo-status ${demo.url ? 'is-live' : ''}">${demo.url ? demoLabels().live : demoLabels().soon}</span>
           <p>${description}</p>
-          <div class="tech-tags">${techPreview}</div>
           <div class="project-actions">${demoAction(demo)}
           <button class="project-link" type="button" data-open-project="${project.id}">
-            <span>${translate('work.viewProject')}</span><span aria-hidden="true">↗</span>
+            <span>${translate('work.viewProject')}</span>
           </button>
           </div>
         </div>
